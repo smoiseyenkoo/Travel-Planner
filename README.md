@@ -30,7 +30,7 @@ and having a planned itinerary and a way to track my budget seems very
 useful.
 
 
-
+### User Stories 
 - As a user, I want to be able to create a Destination and add it to 
 my list of Destinations in my trip.
 - As a user, I want to be able to view the list of activities for each destination.
