@@ -9,97 +9,139 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TripTest {
-    private List<Destination> destinationsPlanned;
-    private List<Destination> destinationsVisited;
-    private List<Destination> destinationsWishList;
+    private List<Destination> destinations;
     private Trip testTrip;
     private Destination testDestination1;
     private Destination testDestination2;
     private Destination testDestination3;
-    private List<String> activities;
+    private List<Activity> activities;
 
     @BeforeEach
     void runBefore() {
-        destinationsPlanned = new ArrayList<>();
-        destinationsVisited = new ArrayList<>();
-        destinationsWishList = new ArrayList<>();
+        destinations = new ArrayList<>();
         activities = new ArrayList<>();
-
-        testTrip = new Trip(destinationsPlanned, destinationsVisited, destinationsWishList);
-        testDestination1 = new Destination("Sofia", "Bulgaria", 700, activities);
-        testDestination2 = new Destination("Toronto", "Canada", 300, activities);
-        testDestination3 = new Destination("North Pole", "Arctic", 10000, activities);
+        testDestination1 = new Destination("Sofia", "Bulgaria", 700, activities,
+                DestinationStatus.PLANNED);
+        testDestination2 = new Destination("Toronto", "Canada", 300, activities,
+                DestinationStatus.PLANNED);
+        testDestination3 = new Destination("North Pole", "Arctic", 10000, activities,
+                DestinationStatus.PLANNED);
+        testTrip = new Trip("New Trip", destinations);
 
     }
 
     @Test
     void testConstructor() {
-        assertEquals(destinationsPlanned, testTrip.getDestinationsPlanned());
-        assertEquals(destinationsVisited, testTrip.getDestinationsVisited());
-        assertEquals(destinationsWishList, testTrip.getDestinationsWishList());
+        assertEquals("New Trip", testTrip.getTripName());
+        assertEquals(destinations, testTrip.getDestinations());
+        assertEquals(0, testTrip.getTotalTripExpense());
 
     }
 
     // adds one planned destination to the trip
     @Test
     void testAddPlannedDestination() {
-        testTrip.addPlannedDestination(testDestination1);
-        assertTrue(testTrip.getDestinationsPlanned().contains(testDestination1));
-        assertFalse(testTrip.getDestinationsPlanned().contains(testDestination2));
-        assertFalse(testTrip.getDestinationsVisited().contains(testDestination2));
+        testTrip.addDestination(testDestination1);
+        assertEquals(DestinationStatus.PLANNED, testDestination1.getDestinationStatus());
+        assertTrue(testTrip.getDestinations().contains(testDestination1));
+        assertFalse(testTrip.getDestinations().contains(testDestination2));
+        assertEquals(700, testTrip.getPlannedExpenses());
+        assertEquals(0, testTrip.getTotalTripExpense());
 
     }
 
     // adds one visited destination to the trip
     @Test
     void testAddVisitedDestination() {
-        testTrip.addPlannedDestination(testDestination1);
-        testTrip.addVisitedDestination(testDestination3);
-        assertTrue(testTrip.getDestinationsPlanned().contains(testDestination1));
-        assertFalse(testTrip.getDestinationsPlanned().contains(testDestination3));
-        assertTrue(testTrip.getDestinationsVisited().contains(testDestination3));
+        testTrip.addDestination(testDestination1);
+        testTrip.addDestination(testDestination3);
+        testDestination3.setDestinationStatus(DestinationStatus.VISITED);
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination1));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination1));
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination3));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination3));
     }
 
     // adds one wishlist destination to the trip
     @Test
     void testAddWishlistDestination() {
-        testTrip.addPlannedDestination(testDestination1);
-        testTrip.addVisitedDestination(testDestination3);
-        testTrip.addWishlist(testDestination2);
-        assertTrue(testTrip.getDestinationsPlanned().contains(testDestination1));
-        assertFalse(testTrip.getDestinationsPlanned().contains(testDestination3));
-        assertTrue(testTrip.getDestinationsVisited().contains(testDestination3));
-        assertTrue(testTrip.getDestinationsWishList().contains(testDestination2));
-        assertFalse(testTrip.getDestinationsWishList().contains(testDestination3));
+        testTrip.addDestination(testDestination1);
+        testTrip.addDestination(testDestination3);
+        testTrip.addDestination(testDestination2);
+        testDestination1.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination2.setDestinationStatus(DestinationStatus.VISITED);
+        testDestination3.setDestinationStatus(DestinationStatus.WISHLIST);
+
+
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination1));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination3));
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.WISHLIST).contains(testDestination3));
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination2));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination3));
     }
 
     // removes one wishlist destination from the trip
     @Test
     void testRemoveWishlistDestination() {
-        testTrip.addPlannedDestination(testDestination1);
-        testTrip.addVisitedDestination(testDestination3);
-        testTrip.addWishlist(testDestination2);
-        testTrip.removeWishlist(testDestination2);
-        assertTrue(testTrip.getDestinationsPlanned().contains(testDestination1));
-        assertFalse(testTrip.getDestinationsPlanned().contains(testDestination3));
-        assertTrue(testTrip.getDestinationsVisited().contains(testDestination3));
-        assertFalse(testTrip.getDestinationsWishList().contains(testDestination2));
-        assertFalse(testTrip.getDestinationsWishList().contains(testDestination3));
+        testTrip.addDestination(testDestination1);
+        testTrip.addDestination(testDestination2);
+        testDestination1.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination2.setDestinationStatus(DestinationStatus.WISHLIST);
+        testTrip.removeDestination(testDestination2);
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination1));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination2));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.WISHLIST).contains(testDestination2));
     }
 
-    // removes one wishlist destination from the trip
+    // removes 2 planned destinations from the trip
     @Test
     void testRemovePlannedDestination() {
-        testTrip.addPlannedDestination(testDestination1);
-        testTrip.addVisitedDestination(testDestination3);
-        testTrip.addWishlist(testDestination2);
-        testTrip.removePlannedDestination(testDestination1);
-        testTrip.removeWishlist(testDestination2);
-        assertFalse(testTrip.getDestinationsPlanned().contains(testDestination1));
-        assertFalse(testTrip.getDestinationsPlanned().contains(testDestination3));
-        assertTrue(testTrip.getDestinationsVisited().contains(testDestination3));
-        assertFalse(testTrip.getDestinationsWishList().contains(testDestination2));
-        assertFalse(testTrip.getDestinationsWishList().contains(testDestination3));
+        testTrip.addDestination(testDestination1);
+        testTrip.addDestination(testDestination3);
+        testDestination1.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination3.setDestinationStatus(DestinationStatus.PLANNED);
+        testTrip.removeDestination(testDestination1);
+        testDestination3.setDestinationStatus(DestinationStatus.VISITED);
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination3));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination3));
+        assertFalse(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination1));
+        assertEquals(0, testTrip.getPlannedExpenses());
+        assertEquals(10000, testTrip.getTotalTripExpense());
     }
+
+    // adds 3 planned destinations to the trip
+    @Test
+    void testAddMultiplePlannedDestination() {
+        testTrip.addDestination(testDestination1);
+        testTrip.addDestination(testDestination2);
+        testTrip.addDestination(testDestination3);
+        testDestination1.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination2.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination3.setDestinationStatus(DestinationStatus.PLANNED);
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination1));
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination2));
+        assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination3));
+        assertEquals(3, testTrip.getStatusDestinations(DestinationStatus.PLANNED).size());
+        assertEquals(11000, testTrip.getPlannedExpenses());
+    }
+
+    // removes 2 planned destinations from the trip
+    @Test
+    void testCheckRemovedPlannedDestinationCost() {
+        testTrip.addDestination(testDestination1);
+        testDestination1.setDestinationStatus(DestinationStatus.PLANNED);
+        testTrip.addDestination(testDestination2);
+        testDestination2.setDestinationStatus(DestinationStatus.PLANNED);
+        testTrip.addDestination(testDestination3);
+        testDestination3.setDestinationStatus(DestinationStatus.PLANNED);
+        testTrip.removeDestination(testDestination3);
+        testTrip.removeDestination(testDestination2);
+        assertTrue(testTrip.getDestinations().contains(testDestination1));
+        assertFalse(testTrip.getDestinations().contains(testDestination3));
+        assertFalse(testTrip.getDestinations().contains(testDestination2));
+        assertEquals(700, testTrip.getPlannedExpenses());
+    }
+
+
 
 }
