@@ -12,10 +12,12 @@ public class Activity {
         this.cost = cost;
     }
 
+    // EFFECTS: returns cost of the activity in dollars
     public int getActivityCost() {
         return this.cost;
     }
 
+    // EFFECTS: returns name of the activity
     public String getActivityName() {
         return this.name;
     }

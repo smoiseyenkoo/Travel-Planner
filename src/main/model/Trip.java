@@ -43,7 +43,7 @@ public class Trip {
 
 //     REQUIRES: visited destination should have already been in planned
 //     destinations
-//     MODIFIES: this, ...
+//     MODIFIES: this, Destination
 //     EFFECTS: adds the destination to the visited list and removes it from the
 //     planned list, and adds the travel cost to the total trip cost
     public void addVisitedDestination(Destination destination) {
@@ -51,6 +51,8 @@ public class Trip {
         this.tripExpense += destination.getTravelCost();
     }
 
+    // EFFECTS: returns the total trip expense of the Visited destinations
+    // in dollars
     public int getTotalTripExpense() {
         int visitedExpenses = 0;
         for (Destination destination : this.destinations) {
@@ -62,14 +64,18 @@ public class Trip {
         return visitedExpenses;
     }
 
+    // EFFECTS: returns the list of destinations
     public List<Destination> getDestinations() {
         return this.destinations;
     }
 
+    // EFFECTS: returns the name of the trip
     public String getTripName() {
         return this.tripName;
     }
 
+    // EFFECTS: returns the planned trip expense of the Planned destinations
+    // in dollars
     public int getPlannedExpenses() {
         int plannedExpenses = 0;
         for (Destination destination : this.destinations) {
@@ -81,6 +87,8 @@ public class Trip {
         return plannedExpenses;
     }
 
+    // EFFECTS: returns a list of the destinations of the specified
+    // status (PLANNED, VISITED, WISHLIST)
     public List<Destination> getStatusDestinations(DestinationStatus status) {
         List<Destination> statusDestination = new ArrayList<>();
         for (Destination destination : destinations) {

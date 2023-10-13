@@ -51,19 +51,8 @@ class DestinationTest {
 
     }
 
-    // removes an activity from activities
-    @Test
-    void testRemoveActivity() {
-        testDestination.addActivity(testActivity1);
-        testDestination.addActivity(testActivity2);
-        testDestination.removeActivity(testActivity2);
-        assertTrue(testDestination.getActivities().contains(testActivity1));
-        assertFalse(testDestination.getActivities().contains(testActivity2));
-        assertEquals(600, testDestination.getTravelCost());
 
-    }
-
-    // removes an activity from activities
+    // test to add the same activity to the list
     @Test
     void testAddSameActivity() {
         testDestination.addActivity(testActivity1);

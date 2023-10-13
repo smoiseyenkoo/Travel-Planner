@@ -68,13 +68,6 @@ public class TravelPlannerApp {
 
 
         }
-        // Clear the screen by printing empty lines
-//        for (int i = 0; i < 50; i++) {
-//            System.out.println();
-//        }
-        // while (menuValue != 4):
-
-
     }
 
     public void displayDestinations() {
@@ -87,68 +80,48 @@ public class TravelPlannerApp {
     }
 
     public void displayDestinationsMenu() {
-        System.out.println("\nDestinations Menu:");
-        System.out.println("1. View Planned Destinations");
-        System.out.println("2. View Visited Destinations");
-        System.out.println("3. View Wishlist Destinations");
-        System.out.println("4. Add new Destination");
-        System.out.println("5. View planned trip costs");
-        System.out.println("6. View total trip costs");
-        System.out.println("7. Select Destination");
-        System.out.println("8. Back to Main Menu");
-        System.out.print("Please enter your choice (1/2/3/4/5/6/7/8): ");
+        displayDestinationMenuOptions();
 
         int destinationsMenuValue = input.nextInt();
         switch (destinationsMenuValue) {
             case 1:
-                if (newTrip.getStatusDestinations(DestinationStatus.PLANNED).size() == 0) {
-                    System.out.println("You have no planned destinations!");
-                    displayDestinationsMenu();
-                } else {
-                    System.out.println(newTrip.getStatusDestinations(DestinationStatus.PLANNED));
-
-                }
+                displayPlannedList();
                 break;
             case 2:
-                if (newTrip.getStatusDestinations(DestinationStatus.VISITED).size() == 0) {
-                    System.out.println("You have no visited destinations!");
-                    displayDestinationsMenu();
-                } else {
-                    System.out.println(newTrip.getStatusDestinations(DestinationStatus.VISITED));
-                }
+                displayVisitedList();
                 break;
             case 3:
-                if (newTrip.getStatusDestinations(DestinationStatus.WISHLIST).size() == 0) {
-                    System.out.println("You have no wishlist destinations!");
-                    displayDestinationsMenu();
-                } else {
-                    System.out.println(newTrip.getStatusDestinations(DestinationStatus.WISHLIST));
-                }
+                displayWishlist();
                 break;
             case 4:
                 this.newDestination = makeNewDestination();
                 newTrip.addDestination(newDestination);
+                break;
+            case 5:
+                System.out.println("Planned trip cost is : $" + newTrip.getPlannedExpenses());
+                break;
+            case 6:
+                System.out.println("Actual trip cost is : $" + newTrip.getTotalTripExpense());
                 break;
             case 7:
                 displayDestinations();
                 System.out.println("Enter destination ID");
                 int selectId = input.nextInt();
                 selectDestination(selectId);
+                break;
+            case 8:
+                displayTripMenu();
+                break;
+            default:
+                System.out.println("invalid entry");
         }
     }
 
 
     public void selectDestination(int selectId) {
-        Destination selectedDestination = destinationsList.stream().filter
-                (destination -> destination.getId() == selectId).findFirst().get();
-        System.out.println("\nSelected Destination: ");
-        System.out.println("1. Display Destination Info");
-        System.out.println("2. View Activities List");
-        System.out.println("3. Add new Activity");
-        System.out.println("4. Change Status of Destination(Planned/Visited/Wishlist");
-        System.out.println("5. Back to Main Menu");
-        System.out.print("Please enter your choice (1/2/3/4/5/6): ");
-
+        Destination selectedDestination = destinationsList.stream().filter(
+                destination -> destination.getId() == selectId).findFirst().get();
+        selectDestinationMenu();
         int selectDestinationsInput = input.nextInt();
         switch (selectDestinationsInput) {
             case 1:
@@ -217,6 +190,57 @@ public class TravelPlannerApp {
 
     }
 
+    public void selectDestinationMenu() {
+        System.out.println("\nSelected Destination: ");
+        System.out.println("1. Display Destination Info");
+        System.out.println("2. View Activities List");
+        System.out.println("3. Add new Activity");
+        System.out.println("4. Change Status of Destination(Planned/Visited/Wishlist");
+        System.out.println("5. Back to Main Menu");
+        System.out.print("Please enter your choice (1/2/3/4/5): ");
+    }
+
+    public void displayDestinationMenuOptions() {
+        System.out.println("\nDestinations Menu:");
+        System.out.println("1. View Planned Destinations");
+        System.out.println("2. View Visited Destinations");
+        System.out.println("3. View Wishlist Destinations");
+        System.out.println("4. Add new Destination");
+        System.out.println("5. View planned trip costs");
+        System.out.println("6. View total trip costs");
+        System.out.println("7. Select Destination");
+        System.out.println("8. Back to Main Menu");
+        System.out.print("Please enter your choice (1/2/3/4/5/6/7/8): ");
+    }
+
+    public void displayPlannedList() {
+        if (newTrip.getStatusDestinations(DestinationStatus.PLANNED).size() == 0) {
+            System.out.println("You have no planned destinations!");
+            displayDestinationsMenu();
+        } else {
+            System.out.println(newTrip.getStatusDestinations(DestinationStatus.PLANNED));
+
+        }
+    }
+
+    public void displayVisitedList() {
+        if (newTrip.getStatusDestinations(DestinationStatus.VISITED).size() == 0) {
+            System.out.println("You have no visited destinations!");
+            displayDestinationsMenu();
+        } else {
+            System.out.println(newTrip.getStatusDestinations(DestinationStatus.VISITED));
+        }
+    }
+
+    public void displayWishlist() {
+        if (newTrip.getStatusDestinations(DestinationStatus.WISHLIST).size() == 0) {
+            System.out.println("You have no wishlist destinations!");
+            displayDestinationsMenu();
+        } else {
+            System.out.println(newTrip.getStatusDestinations(DestinationStatus.WISHLIST));
+        }
+    }
 
 }
+
 
