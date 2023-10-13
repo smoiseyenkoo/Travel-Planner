@@ -81,7 +81,6 @@ public class TravelPlannerApp {
 
     public void displayDestinationsMenu() {
         displayDestinationMenuOptions();
-
         int destinationsMenuValue = input.nextInt();
         switch (destinationsMenuValue) {
             case 1:
@@ -169,7 +168,9 @@ public class TravelPlannerApp {
                 input.nextLine();
                 System.out.println("Add activities? (yes/no): ");
                 inputAddActivity = input.nextLine();  // Read user input
-                if (!"yes".equalsIgnoreCase(inputAddActivity)) break;
+                if (!"yes".equalsIgnoreCase(inputAddActivity)) {
+                    break;
+                }
             } while (true);
 
 
