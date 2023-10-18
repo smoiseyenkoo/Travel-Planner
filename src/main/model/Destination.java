@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Destination {
-    private String city;
-    private String country;
+    private final String city;
+    private final String country;
     private int travelCost;
-    private List<Activity> activities;
+    private final List<Activity> activities;
     private DestinationStatus destinationStatus;
-    private int id;
+    private final int id;
     private static int nextId = 0;
 
 

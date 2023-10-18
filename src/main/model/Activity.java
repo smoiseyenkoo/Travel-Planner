@@ -1,8 +1,8 @@
 package model;
 
 public class Activity {
-    private String name;
-    private int cost;
+    private final String name;
+    private final int cost;
 
     // REQUIRES: cost >= 0
     // MODIFIES: this

@@ -11,11 +11,9 @@ import java.util.Scanner;  // Import the Scanner class
 
 public class TravelPlannerApp {
     Scanner input;
-    private List<Destination> destinationsList = new ArrayList<>();
-    private String tripName;
+    private final List<Destination> destinationsList = new ArrayList<>();
     Trip newTrip;
     private Destination newDestination;
-    private Activity activity;
 
 
     public static void main(String[] args) {
@@ -30,9 +28,9 @@ public class TravelPlannerApp {
 
     public void run() {
         boolean keepGoing = true;
-        String command = null;
+        // String command = null;
         System.out.println("Enter new trip name!");
-        tripName = input.nextLine();  // Read user input
+        String tripName = input.nextLine();  // Read user input
         System.out.println("Trip Name is: " + tripName);  // Output user input
         newTrip = new Trip(tripName, destinationsList);
 
@@ -61,8 +59,7 @@ public class TravelPlannerApp {
                 System.exit(0);
             default:
                 System.out.println("invalid entry");
-
-
+                displayTripMenu();
         }
     }
 
@@ -161,7 +158,7 @@ public class TravelPlannerApp {
         List<Activity> activities = new ArrayList<>();
         if ("yes".equalsIgnoreCase(inputAddActivity)) {
             do {
-                activity = createActivity();
+                Activity activity = createActivity();
                 activities.add(activity);
                 input.nextLine();
                 System.out.println("Add activities? (yes/no): ");
@@ -173,7 +170,7 @@ public class TravelPlannerApp {
 
 
         } else {
-            activities = new ArrayList<Activity>();
+            activities = new ArrayList<>();
         }
         newDestination = new Destination(cityName, countryName, travelCost, activities, destinationStatus);
         return newDestination;
