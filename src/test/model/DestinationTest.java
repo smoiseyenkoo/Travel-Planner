@@ -25,6 +25,7 @@ class DestinationTest {
         testActivity3 = new Activity("Swimming", 0);
     }
 
+
     @Test
     void testConstructor() {
         assertEquals("Sydney", testDestination.getCity());
@@ -63,4 +64,40 @@ class DestinationTest {
         assertEquals(715, testDestination.getTravelCost());
 
     }
+
+    // test to set the status of the destination to WISHLIST
+    @Test
+    void testSetStatusWishlist() {
+        testDestination.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination.setDestinationStatus(DestinationStatus.valueOf(3));
+        assertEquals(DestinationStatus.WISHLIST, testDestination.getDestinationStatus());
+    }
+
+    // test to set the status of the destination to PLANNED
+    @Test
+    void testSetStatusPLANNED() {
+        testDestination.setDestinationStatus(DestinationStatus.PLANNED);
+        testDestination.setDestinationStatus(DestinationStatus.valueOf(1));
+        assertEquals(DestinationStatus.PLANNED, testDestination.getDestinationStatus());
+    }
+
+    // test to set the status of the destination to VISITED
+    @Test
+    void testSetStatusVisited() {
+        testDestination.setDestinationStatus(DestinationStatus.WISHLIST);
+        assertEquals(DestinationStatus.WISHLIST, testDestination.getDestinationStatus());
+        testDestination.setDestinationStatus(DestinationStatus.valueOf(2));
+        assertEquals(DestinationStatus.VISITED, testDestination.getDestinationStatus());
+    }
+
+    // test to set the status of the destination to DEFAULT
+    @Test
+    void testSetStatusDefault() {
+        testDestination.setDestinationStatus(DestinationStatus.PLANNED);
+        assertEquals(DestinationStatus.PLANNED, testDestination.getDestinationStatus());
+        testDestination.setDestinationStatus(DestinationStatus.valueOf(11));
+        assertEquals(DestinationStatus.PLANNED, testDestination.getDestinationStatus());
+    }
+
+
 }

@@ -47,11 +47,7 @@ public class TravelPlannerApp {
 
     // EFFECTS: displays menu of options to user
     public void displayTripMenu() {
-        System.out.println("\nMenu:");
-        System.out.println("1. View Destination Menu");
-        System.out.println("2. Display Destinations");
-        System.out.println("3. Quit");
-        System.out.print("Please enter your choice (1/2/3): ");
+        displayTripMenuOptions();
         int menuValue = input.nextInt();  // Read user input
         switch (menuValue) {
             case 1:
@@ -79,6 +75,7 @@ public class TravelPlannerApp {
         }
     }
 
+    @SuppressWarnings("methodlength") // Signed by Nanjou
     public void displayDestinationsMenu() {
         displayDestinationMenuOptions();
         int destinationsMenuValue = input.nextInt();
@@ -116,7 +113,7 @@ public class TravelPlannerApp {
         }
     }
 
-
+    @SuppressWarnings("methodlength") // Signed by Nanjou
     public void selectDestination(int selectId) {
         Destination selectedDestination = destinationsList.stream().filter(
                 destination -> destination.getId() == selectId).findFirst().get();
@@ -145,6 +142,7 @@ public class TravelPlannerApp {
         }
     }
 
+    @SuppressWarnings("methodlength") // Signed by Nanjou
     private Destination makeNewDestination() {
         input.nextLine();
         System.out.println("Please Enter City Name: ");
@@ -212,6 +210,14 @@ public class TravelPlannerApp {
         System.out.println("7. Select Destination");
         System.out.println("8. Back to Main Menu");
         System.out.print("Please enter your choice (1/2/3/4/5/6/7/8): ");
+    }
+
+    public void displayTripMenuOptions() {
+        System.out.println("\nMenu:");
+        System.out.println("1. View Destination Menu");
+        System.out.println("2. Display Destinations");
+        System.out.println("3. Quit");
+        System.out.print("Please enter your choice (1/2/3): ");
     }
 
     public void displayPlannedList() {

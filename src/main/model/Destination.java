@@ -10,6 +10,7 @@ public class Destination {
     private List<Activity> activities;
     private DestinationStatus destinationStatus;
     private int id;
+    private static int nextId = 0;
 
 
 
@@ -23,7 +24,7 @@ public class Destination {
         this.travelCost = travelCost;
         this.activities = activities == null ? new ArrayList<>() : activities;
         this.destinationStatus = destinationStatus;
-        ++this.id;
+        this.id = ++nextId;
     }
 
     // EFFECTS: Adds activity to the list and adds activity cost to travel cost
@@ -88,5 +89,6 @@ public class Destination {
                 +
                 '}';
     }
+
 
 }
