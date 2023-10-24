@@ -15,7 +15,7 @@ destination, and once they set a destination as *visited*, that will remove
 the destination from the *planned destinations list* and into the *already 
 visited list*. The user would also be able to add or remove activities from the list of
 activities to do at each destination, or just be able to access the list. A *track expenses*
-method would also allow the user to total up all of the expenses spent in their trip so far.
+method would also allow the user to total up all the expenses spent in their trip so far.
 
 Anyone who wishes to travel with organization and a cool itinerary would 
 want to use this application. Being able to track the places that one has
@@ -37,3 +37,6 @@ my list of Destinations in my trip.
 - As a user, I want to be able to sum up my total expenses in my trip so far.
 - As a user, I want to be able to mark a Destination as "visited" and remove it
 off my planned list and place it onto my already visited list.
+
+- As a user, I want to be able to save my Trip to the file, if I want to
+- As a user, I want to be able to be able to load my Trip from file, if I want to

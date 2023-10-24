@@ -7,6 +7,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Unit tests for the Destination class.
+
 class DestinationTest {
     private Destination testDestination;
     private List<Activity> activities;

@@ -1,5 +1,6 @@
 package model;
 
+// represents an Activity
 public class Activity {
     private final String name;
     private final int cost;

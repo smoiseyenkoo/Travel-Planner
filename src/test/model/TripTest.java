@@ -8,6 +8,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Unit tests for the Trip class.
+
 public class TripTest {
     private List<Destination> destinations;
     private Trip testTrip;

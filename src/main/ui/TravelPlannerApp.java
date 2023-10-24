@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
 
+// Runs the Travel Planner app
 public class TravelPlannerApp {
     Scanner input;
     private final List<Destination> destinationsList = new ArrayList<>();

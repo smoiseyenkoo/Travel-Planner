@@ -1,5 +1,6 @@
 package model;
 
+// represents a set of destination statuses being planned, visited, or wishlist
 public enum DestinationStatus {
     PLANNED(1), VISITED(2), WISHLIST(3);
 

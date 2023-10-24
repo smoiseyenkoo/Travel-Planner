@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// represents a destination
 public class Destination {
     private final String city;
     private final String country;
