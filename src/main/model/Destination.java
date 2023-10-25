@@ -1,15 +1,18 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // represents a destination
-public class Destination {
+public class Destination implements Writable {
     private final String city;
     private final String country;
     private int travelCost;
     private final List<Activity> activities;
-    private DestinationStatus destinationStatus;
+    private static DestinationStatus destinationStatus;
     private final int id;
     private static int nextId = 0;
 
@@ -90,6 +93,18 @@ public class Destination {
                 +
                 '}';
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("city", city);
+        json.put("country", country);
+        json.put("travelCost", travelCost);
+        json.put("activities", activities);
+        json.put("destinationStatus", destinationStatus);
+        return json;
+    }
+
 
 
 }

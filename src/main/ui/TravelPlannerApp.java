@@ -4,26 +4,36 @@ import model.Activity;
 import model.Destination;
 import model.DestinationStatus;
 import model.Trip;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
 
 // Runs the Travel Planner app
 public class TravelPlannerApp {
+    private static final String JSON_STORE = "./data/trip.json";
     Scanner input;
     private final List<Destination> destinationsList = new ArrayList<>();
     Trip newTrip;
     private Destination newDestination;
-
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static String tripName;
 
     public static void main(String[] args) {
-        new TravelPlannerApp().run();
+        new TravelPlannerApp();
 
     }
 
     public TravelPlannerApp() {
         input = new Scanner(System.in);  // Create a Scanner object
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        run();
 
     }
 
@@ -31,7 +41,7 @@ public class TravelPlannerApp {
         boolean keepGoing = true;
         // String command = null;
         System.out.println("Enter new trip name!");
-        String tripName = input.nextLine();  // Read user input
+        tripName = input.nextLine();  // Read user input
         System.out.println("Trip Name is: " + tripName);  // Output user input
         newTrip = new Trip(tripName, destinationsList);
 
@@ -56,8 +66,17 @@ public class TravelPlannerApp {
                 displayDestinations();
                 break;
             case 3:
+                System.out.println("Loading...");
+                loadTrip();
+            case 4:
+                saveTrip();
+                System.out.println("Saved! goodbye!");
+                System.exit(0);
+                // SAVING
+            case 5:
                 System.out.println("goodbye!");
                 System.exit(0);
+                //NOT SAVED AND QUIT
             default:
                 System.out.println("invalid entry");
                 displayTripMenu();
@@ -72,6 +91,7 @@ public class TravelPlannerApp {
             System.out.println(destinationsList);
         }
     }
+
 
     @SuppressWarnings("methodlength") // Signed by Nanjou
     public void displayDestinationsMenu() {
@@ -214,8 +234,10 @@ public class TravelPlannerApp {
         System.out.println("\nMenu:");
         System.out.println("1. View Destination Menu");
         System.out.println("2. Display Destinations");
-        System.out.println("3. Quit");
-        System.out.print("Please enter your choice (1/2/3): ");
+        System.out.println("3. Load Trip");
+        System.out.println("4. Save and Quit");
+        System.out.println("5. Quit without saving");
+        System.out.print("Please enter your choice (1/2/3/4/5): ");
     }
 
     public void displayPlannedList() {
@@ -243,6 +265,31 @@ public class TravelPlannerApp {
             displayDestinationsMenu();
         } else {
             System.out.println(newTrip.getStatusDestinations(DestinationStatus.WISHLIST));
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveTrip() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(newTrip);
+            jsonWriter.close();
+            System.out.println("Saved " + tripName + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.exit(0);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadTrip() {
+        try {
+            newTrip = jsonReader.read();
+            System.out.println("Loaded " + newTrip.getTripName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.exit(0);
         }
     }
 

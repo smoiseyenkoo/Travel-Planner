@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trip {
+public class Trip implements Writable {
     private final String tripName;
     private final List<Destination> destinations;
     private int tripExpense;
@@ -64,6 +68,10 @@ public class Trip {
         return this.tripName;
     }
 
+    public int getNumDestinations() {
+        return this.destinations.size();
+    }
+
     // EFFECTS: returns the planned trip expense of the Planned destinations
     // in dollars
     public int getPlannedExpenses() {
@@ -90,6 +98,25 @@ public class Trip {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("tripName", tripName);
+        json.put("destinations", destinationsToJSon());
+        return json;
+    }
+
+    // EFFECTS: returns Destinations in this Trip as a JSON array
+    private JSONArray destinationsToJSon() {
+        JSONArray jsonArray = new JSONArray();
+        for (Destination d : destinations) {
+            jsonArray.put(d.toJson());
+        }
+        return jsonArray;
+    }
+}
+
+
 ////     REQUIRES: visited destination should have already been in planned
 ////     destinations
 ////     MODIFIES: this, Destination
@@ -100,4 +127,4 @@ public class Trip {
 //        this.tripExpense += destination.getTravelCost();
 //    }
 
-}
+

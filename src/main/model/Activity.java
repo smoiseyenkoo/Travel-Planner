@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents an Activity
-public class Activity {
+public class Activity implements Writable {
     private final String name;
     private final int cost;
 
@@ -21,5 +24,13 @@ public class Activity {
     // EFFECTS: returns name of the activity
     public String getActivityName() {
         return this.name;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("cost", cost);
+        return json;
     }
 }
