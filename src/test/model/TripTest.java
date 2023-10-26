@@ -60,6 +60,7 @@ public class TripTest {
         testDestination3.setDestinationStatus(DestinationStatus.VISITED);
         assertTrue(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination1));
         assertFalse(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination1));
+        assertFalse(DestinationStatus.PLANNED == testDestination3.getDestinationStatus());
         assertTrue(testTrip.getStatusDestinations(DestinationStatus.VISITED).contains(testDestination3));
         assertFalse(testTrip.getStatusDestinations(DestinationStatus.PLANNED).contains(testDestination3));
     }

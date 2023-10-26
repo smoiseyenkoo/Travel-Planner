@@ -101,5 +101,24 @@ class DestinationTest {
         assertEquals(DestinationStatus.PLANNED, testDestination.getDestinationStatus());
     }
 
+    // test destination to String
+    @Test
+    void testToString() {
+        testDestination.toString();
+    }
+
+    // test to set JSON object
+    @Test
+    void testToJson() {
+        testDestination.toJson();
+    }
+
+    // test get ID
+    @Test
+    void testGetId() {
+        assertEquals(1, testDestination.getId());
+    }
+
+
 
 }
