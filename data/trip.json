@@ -1,0 +1,19 @@
+{
+    "destinations": [
+        {
+            "country": "country",
+            "city": "new",
+            "activities": [],
+            "travelCost": 1,
+            "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "new country",
+            "city": "new city",
+            "activities": [],
+            "travelCost": 1,
+            "destinationStatus": "PLANNED"
+        }
+    ],
+    "tripName": "New Trip"
+}

@@ -46,15 +46,36 @@ public class JsonReader {
 
     // EFFECTS: parses Trip from JSON object and returns it
     private Trip parseTrip(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
+        String name = jsonObject.getString("tripName");
         List<Destination> destinations = new ArrayList<>();
         Trip trip = new Trip(name, destinations);
         addDestinations(trip, jsonObject);
         return trip;
     }
 
-    // MODIFIES: ds
-    // EFFECTS: parses thingies from JSON object and adds them to Trip
+
+    // MODIFIES: this
+    // EFFECTS: parses activities from JSON object and creates a List of activities
+    private List<Activity> createListActivity(JSONArray jsonArray) {
+        List<Activity> activities =  new ArrayList<>();
+        for (Object json : jsonArray) {
+            JSONObject nextActivity = (JSONObject) json;
+            activities.add(createActivity(nextActivity));
+        }
+        return activities;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: parses an activity from JSON object and creates an activity
+    private Activity createActivity(JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        int cost = jsonObject.getInt("cost");
+        Activity activity = new Activity(name, cost);
+        return activity;
+    }
+
+    // MODIFIES: trip
+    // EFFECTS: parses destinations from JSON object and adds them to Trip
     private void addDestinations(Trip trip, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("destinations");
         for (Object json : jsonArray) {
@@ -63,36 +84,15 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: ds
-    // EFFECTS: parses thingies from JSON object and adds them to Trip
-    private List<Activity> addActivities(JSONArray jsonArray) {
-        List<Activity> activities =  new ArrayList<>();
-        //JSONArray jsonArray = jsonObject.getJSONArray("activities");
-        for (Object json : jsonArray) {
-            JSONObject nextActivity = (JSONObject) json;
-            activities.add(addActivity(nextActivity));
-        }
-        return activities;
-    }
-
-    // MODIFIES: ds
-    // EFFECTS: parses Destination from JSON object and adds it to Trip
-    private Activity addActivity(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        int cost = jsonObject.getInt("cost");
-        Activity activity = new Activity(name, cost);
-        return activity;
-    }
-
-
-    // MODIFIES: ds
+    // MODIFIES: trip
     // EFFECTS: parses Destination from JSON object and adds it to Trip
     private void addDestination(Trip trip, JSONObject jsonObject) {
         String city = jsonObject.getString("city");
         String country = jsonObject.getString("country");
         int travelCost = jsonObject.getInt("travelCost");
-        List<Activity> activities = addActivities(jsonObject.getJSONArray("activities"));
-        DestinationStatus destinationStatus = DestinationStatus.valueOf(jsonObject.getString("status"));
+
+        List<Activity> activities = createListActivity(jsonObject.getJSONArray("activities"));
+        DestinationStatus destinationStatus = DestinationStatus.valueOf(jsonObject.getString("destinationStatus"));
         Destination destination = new Destination(city, country, travelCost, activities, destinationStatus);
         trip.addDestination(destination);
     }

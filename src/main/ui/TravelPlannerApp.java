@@ -33,6 +33,8 @@ public class TravelPlannerApp {
         input = new Scanner(System.in);  // Create a Scanner object
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        tripName = "Your Trip";
+        newTrip = new Trip(tripName, destinationsList);
         run();
 
     }
@@ -40,10 +42,10 @@ public class TravelPlannerApp {
     public void run() {
         boolean keepGoing = true;
         // String command = null;
-        System.out.println("Enter new trip name!");
-        tripName = input.nextLine();  // Read user input
-        System.out.println("Trip Name is: " + tripName);  // Output user input
-        newTrip = new Trip(tripName, destinationsList);
+//        System.out.println("Enter new trip name!");
+//        tripName = input.nextLine();  // Read user input
+//        System.out.println("Trip Name is: " + tripName);  // Output user input
+
 
 
         while (keepGoing) {
@@ -55,6 +57,7 @@ public class TravelPlannerApp {
 
 
     // EFFECTS: displays menu of options to user
+    @SuppressWarnings("methodlength") // Signed by Nanjou
     public void displayTripMenu() {
         displayTripMenuOptions();
         int menuValue = input.nextInt();  // Read user input
@@ -66,8 +69,9 @@ public class TravelPlannerApp {
                 displayDestinations();
                 break;
             case 3:
-                System.out.println("Loading...");
+                System.out.println("Loading Your Trip...");
                 loadTrip();
+                displayTripMenu();
             case 4:
                 saveTrip();
                 System.out.println("Saved! goodbye!");
@@ -268,7 +272,7 @@ public class TravelPlannerApp {
         }
     }
 
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: saves the Trip to file
     private void saveTrip() {
         try {
             jsonWriter.open();
@@ -282,7 +286,7 @@ public class TravelPlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads Trip from file
     private void loadTrip() {
         try {
             newTrip = jsonReader.read();
