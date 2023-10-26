@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import org.json.*;
 // Code sourced from JsonSerializationDemo
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads trip from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -25,7 +25,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads trip from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Trip read() throws IOException {
         String jsonData = readFile(source);
@@ -68,8 +68,8 @@ public class JsonReader {
     // MODIFIES: this
     // EFFECTS: parses an activity from JSON object and creates an activity
     private Activity createActivity(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        int cost = jsonObject.getInt("cost");
+        String name = jsonObject.getString("activityName");
+        int cost = jsonObject.getInt("activityCost");
         Activity activity = new Activity(name, cost);
         return activity;
     }

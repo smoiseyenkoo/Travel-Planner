@@ -13,34 +13,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
 
+// Code sourced from JsonSerializationDemo
+
 // Runs the Travel Planner app
 public class TravelPlannerApp {
     private static final String JSON_STORE = "./data/trip.json";
     Scanner input;
-    private final List<Destination> destinationsList = new ArrayList<>();
+     //////////////////////////////////////////////////////
     Trip newTrip;
+    private List<Destination> destinations = new ArrayList<>();
     private Destination newDestination;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static String tripName;
 
+    // EFFECTS: creates instance of the Travel Planner app
     public static void main(String[] args) {
         new TravelPlannerApp();
 
     }
 
+    // EFFECTS: constructs New trip and runs Travel planner application
     public TravelPlannerApp() {
         input = new Scanner(System.in);  // Create a Scanner object
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         tripName = "Your Trip";
-        newTrip = new Trip(tripName, destinationsList);
+        newTrip = new Trip(tripName, destinations);
         run();
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: runs app and displays trip main menu
     public void run() {
         boolean keepGoing = true;
+        System.out.println("Welcome to " + tripName + "!");  // Output user input
+
         // String command = null;
 //        System.out.println("Enter new trip name!");
 //        tripName = input.nextLine();  // Read user input
@@ -56,7 +65,8 @@ public class TravelPlannerApp {
     }
 
 
-    // EFFECTS: displays menu of options to user
+    // EFFECTS: displays main menu of options to user and processes user command
+    // MODIFIES: this
     @SuppressWarnings("methodlength") // Signed by Nanjou
     public void displayTripMenu() {
         displayTripMenuOptions();
@@ -72,31 +82,24 @@ public class TravelPlannerApp {
                 System.out.println("Loading Your Trip...");
                 loadTrip();
                 displayTripMenu();
+                break;
             case 4:
                 saveTrip();
                 System.out.println("Saved! goodbye!");
-                System.exit(0);
-                // SAVING
+                System.exit(0); // SAVING
             case 5:
                 System.out.println("goodbye!");
-                System.exit(0);
-                //NOT SAVED AND QUIT
+                System.exit(0); //NOT SAVED AND QUIT
             default:
                 System.out.println("invalid entry");
                 displayTripMenu();
-        }
-    }
-
-    public void displayDestinations() {
-        if (this.destinationsList.size() == 0) {
-            System.out.println("You have no destinations yet!");
-            displayTripMenu();
-        } else {
-            System.out.println(destinationsList);
+                break;
         }
     }
 
 
+    // EFFECTS: displays destinations menu of options to user and processes user command
+    // MODIFIES: this
     @SuppressWarnings("methodlength") // Signed by Nanjou
     public void displayDestinationsMenu() {
         displayDestinationMenuOptions();
@@ -135,9 +138,11 @@ public class TravelPlannerApp {
         }
     }
 
+    // EFFECTS: displays select destination menu of options to user and processes user command
+    // MODIFIES: this
     @SuppressWarnings("methodlength") // Signed by Nanjou
     public void selectDestination(int selectId) {
-        Destination selectedDestination = destinationsList.stream().filter(
+        Destination selectedDestination = destinations.stream().filter(
                 destination -> destination.getId() == selectId).findFirst().get();
         selectDestinationMenu();
         int selectDestinationsInput = input.nextInt();
@@ -164,6 +169,8 @@ public class TravelPlannerApp {
         }
     }
 
+    // EFFECTS: displays prompts to make a new destination to user and processes user command
+    // MODIFIES: this, destinations
     @SuppressWarnings("methodlength") // Signed by Nanjou
     private Destination makeNewDestination() {
         input.nextLine();
@@ -201,6 +208,8 @@ public class TravelPlannerApp {
         return newDestination;
     }
 
+    // EFFECTS: displays prompts to create a new activity to user and processes user command
+    // MODIFIES: this
     public Activity createActivity() {
         System.out.println("Please Enter Activity Name: ");
         String activityName = input.nextLine();  // Read user input
@@ -211,6 +220,7 @@ public class TravelPlannerApp {
 
     }
 
+    // EFFECTS: displays selected destination menu of options to user
     public void selectDestinationMenu() {
         System.out.println("\nSelected Destination: ");
         System.out.println("1. Display Destination Info");
@@ -221,6 +231,7 @@ public class TravelPlannerApp {
         System.out.print("Please enter your choice (1/2/3/4/5): ");
     }
 
+    // EFFECTS: displays destination menu of options to user
     public void displayDestinationMenuOptions() {
         System.out.println("\nDestinations Menu:");
         System.out.println("1. View Planned Destinations");
@@ -234,6 +245,7 @@ public class TravelPlannerApp {
         System.out.print("Please enter your choice (1/2/3/4/5/6/7/8): ");
     }
 
+    // EFFECTS: displays trip menu of options to user
     public void displayTripMenuOptions() {
         System.out.println("\nMenu:");
         System.out.println("1. View Destination Menu");
@@ -244,6 +256,17 @@ public class TravelPlannerApp {
         System.out.print("Please enter your choice (1/2/3/4/5): ");
     }
 
+    // EFFECTS: displays total list of destinations
+    public void displayDestinations() {
+        if (this.destinations.size() == 0) {
+            System.out.println("You have no destinations yet!");
+            displayTripMenu();
+        } else {
+            System.out.println(newTrip.getDestinations());
+        }
+    }
+
+    // EFFECTS: displays list of planned destinations to user
     public void displayPlannedList() {
         if (newTrip.getStatusDestinations(DestinationStatus.PLANNED).size() == 0) {
             System.out.println("You have no planned destinations!");
@@ -254,6 +277,7 @@ public class TravelPlannerApp {
         }
     }
 
+    // EFFECTS: displays list of visited destinations to user
     public void displayVisitedList() {
         if (newTrip.getStatusDestinations(DestinationStatus.VISITED).size() == 0) {
             System.out.println("You have no visited destinations!");
@@ -263,6 +287,7 @@ public class TravelPlannerApp {
         }
     }
 
+    // EFFECTS: displays list of wishlist destinations to user
     public void displayWishlist() {
         if (newTrip.getStatusDestinations(DestinationStatus.WISHLIST).size() == 0) {
             System.out.println("You have no wishlist destinations!");
@@ -290,6 +315,7 @@ public class TravelPlannerApp {
     private void loadTrip() {
         try {
             newTrip = jsonReader.read();
+            this.destinations = newTrip.getDestinations();
             System.out.println("Loaded " + newTrip.getTripName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

@@ -7,9 +7,10 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a trip
 public class Trip implements Writable {
     private final String tripName;
-    private final List<Destination> destinations;
+    private List<Destination> destinations;
     private int tripExpense;
     private int plannedTripExpense;
 
@@ -68,6 +69,7 @@ public class Trip implements Writable {
         return this.tripName;
     }
 
+    // EFFECTS: returns the total number of destinations in the list
     public int getNumDestinations() {
         return this.destinations.size();
     }
@@ -97,7 +99,7 @@ public class Trip implements Writable {
         return statusDestination;
     }
 
-
+// EFFECTS: returns a trip as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

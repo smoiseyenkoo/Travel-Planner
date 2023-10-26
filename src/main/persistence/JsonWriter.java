@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 
 import java.io.*;
+// Code sourced from JsonSerializationDemo
 
 // Represents a writer that writes JSON representation of trip to file
 public class JsonWriter {
@@ -25,7 +26,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of trip to file
     public void write(Trip trip) {
         JSONObject json = trip.toJson();
         saveToFile(json.toString(TAB));

@@ -10,6 +10,8 @@ public enum DestinationStatus {
 
     final int id;
 
+// EFFECTS: Assigns the input value to a Destination status
+
     public static DestinationStatus valueOf(int id) {
         switch (id) {
             case 1: return PLANNED;

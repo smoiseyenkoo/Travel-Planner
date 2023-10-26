@@ -94,6 +94,7 @@ public class Destination implements Writable {
                 '}';
     }
 
+    // EFFECTS: returns a destination as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

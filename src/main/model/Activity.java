@@ -26,6 +26,7 @@ public class Activity implements Writable {
         return this.name;
     }
 
+    // EFFECTS: returns an activity as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

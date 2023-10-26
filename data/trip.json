@@ -1,19 +1,22 @@
 {
     "destinations": [
         {
-            "country": "country",
-            "city": "new",
+            "country": "canada",
+            "city": "vancouver",
             "activities": [],
             "travelCost": 1,
-            "destinationStatus": "PLANNED"
+            "destinationStatus": "VISITED"
         },
         {
-            "country": "new country",
-            "city": "new city",
-            "activities": [],
+            "country": "canada",
+            "city": "toronot",
+            "activities": [{
+                "activityCost": 1,
+                "activityName": "sailing"
+            }],
             "travelCost": 1,
             "destinationStatus": "PLANNED"
         }
     ],
-    "tripName": "New Trip"
+    "tripName": "Your Trip"
 }

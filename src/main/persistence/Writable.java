@@ -1,5 +1,7 @@
 package persistence;
 
+// Code sourced from JsonSerializationDemo
+
 import org.json.JSONObject;
 
 public interface Writable {
