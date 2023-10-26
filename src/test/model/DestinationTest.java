@@ -117,6 +117,7 @@ class DestinationTest {
     @Test
     void testGetId() {
         assertEquals(1, testDestination.getId());
+        assertFalse(testDestination.getId() == 2);
     }
 
 

@@ -38,5 +38,5 @@ my list of Destinations in my trip.
 - As a user, I want to be able to mark a Destination as "visited" and remove it
 off my planned list and place it onto my already visited list.
 
-- As a user, I want to be able to save my Trip to the file, if I want to
-- As a user, I want to be able to be able to load my Trip from file, if I want to
+- As a user, I want to be able to save my Trip to the file, if I want to.
+- As a user, I want to be able to be able to load my Trip from file, if I want to.

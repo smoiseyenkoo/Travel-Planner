@@ -12,7 +12,7 @@
       "city": "Toronto",
       "activities": [],
       "travelCost": 300,
-      "destinationStatus": "PLANNED"
+      "destinationStatus": "VISITED"
     }
   ],
   "tripName": "New Trip"

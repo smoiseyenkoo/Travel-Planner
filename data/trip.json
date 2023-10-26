@@ -9,11 +9,18 @@
         },
         {
             "country": "canada",
-            "city": "toronot",
+            "city": "toronto",
             "activities": [{
                 "activityCost": 1,
                 "activityName": "sailing"
             }],
+            "travelCost": 1,
+            "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "germany",
+            "city": "berlin",
+            "activities": [],
             "travelCost": 1,
             "destinationStatus": "PLANNED"
         }

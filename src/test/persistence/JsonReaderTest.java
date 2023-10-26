@@ -68,6 +68,8 @@ class JsonReaderTest extends JsonTest {
             assertEquals("New Trip", trip.getTripName());
             List<Destination> destinations = trip.getDestinations();
             assertEquals(2, destinations.size());
+            checkDestination("Sofia", DestinationStatus.PLANNED, destinations.get(0));
+            checkDestination("Toronto", DestinationStatus.VISITED, destinations.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
