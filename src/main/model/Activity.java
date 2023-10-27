@@ -3,7 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-// represents an Activity
+// represents an Activity having a name and a cost
 public class Activity implements Writable {
     private final String name;
     private final int cost;

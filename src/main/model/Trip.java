@@ -7,7 +7,7 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a trip
+// Represents a trip having a name and a list of destinations
 public class Trip implements Writable {
     private final String tripName;
     private List<Destination> destinations;

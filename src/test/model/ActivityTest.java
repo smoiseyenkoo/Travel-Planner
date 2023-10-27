@@ -23,6 +23,6 @@ public class ActivityTest {
 //    // test to set JSON object
 //    @Test
 //    void testToJson() {
-//        testActivity1.toJson();
+//        assertEquals(new JsonObject{"cost":100,"name":"Surfing"}, testActivity1.toJson());
 //    }
 }

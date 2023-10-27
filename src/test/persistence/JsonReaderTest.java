@@ -23,18 +23,21 @@ class JsonReaderTest extends JsonTest {
     private Destination testDestination1;
     private Destination testDestination2;
     private Destination testDestination3;
-    private List<Activity> activities;
+    private List<Activity> activities1;
+    private List<Activity> activities2;
 
     @BeforeEach
     void runBefore() {
         destinations = new ArrayList<>();
-        activities = new ArrayList<>();
-        testDestination1 = new Destination("Sofia", "Bulgaria", 700, activities,
+        activities1 = new ArrayList<>();
+        testDestination1 = new Destination("Sofia", "Bulgaria", 700, activities1,
                 DestinationStatus.PLANNED);
-        testDestination2 = new Destination("Toronto", "Canada", 300, activities,
+        Activity testActivity2 = new Activity("sailing", 50);
+        activities2 = new ArrayList<>();
+        activities2.add(testActivity2);
+        testDestination2 = new Destination("Toronto", "Canada", 300, activities2,
                 DestinationStatus.PLANNED);
-        testDestination3 = new Destination("North Pole", "Arctic", 10000, activities,
-                DestinationStatus.PLANNED);
+
         testTrip = new Trip("New Trip", destinations);
 
     }

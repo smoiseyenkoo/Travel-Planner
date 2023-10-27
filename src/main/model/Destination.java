@@ -6,7 +6,8 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
-// represents a destination
+// represents a destination having a name of a city, it's corresponding country, the travel cost in dollars,
+// a list of activities at that destination, it's visitation status, and an ID.
 public class Destination implements Writable {
     private final String city;
     private final String country;

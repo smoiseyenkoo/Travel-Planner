@@ -111,7 +111,7 @@ class DestinationTest {
 //    // test to set JSON object
 //    @Test
 //    void testToJson() {
-//        testDestination.toJson();
+//        assertEquals(0, testDestination.toJson());
 //    }
 
     // test get ID
