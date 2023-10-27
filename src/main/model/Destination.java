@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // represents a destination having a name of a city, it's corresponding country, the travel cost in dollars,
-// a list of activities at that destination, it's visitation status, and an ID.
+// a list of activities at that destination, it's visitation status, and an ID number for selection.
 public class Destination implements Writable {
     private final String city;
     private final String country;
@@ -16,7 +16,6 @@ public class Destination implements Writable {
     private DestinationStatus destinationStatus;
     private final int id;
     private static int nextId = 0;
-
 
 
     // REQUIRES: travelCosts >= 0
@@ -95,6 +94,7 @@ public class Destination implements Writable {
                 '}';
     }
 
+    // JSON Code inspired by JsonSerializationDemo
     // EFFECTS: returns a destination as a JSON object
     @Override
     public JSONObject toJson() {

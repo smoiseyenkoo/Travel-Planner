@@ -99,6 +99,7 @@ public class Trip implements Writable {
         return statusDestination;
     }
 
+// JSON Code inspired by JsonSerializationDemo
 // EFFECTS: returns a trip as a JSON object
     @Override
     public JSONObject toJson() {
@@ -117,16 +118,3 @@ public class Trip implements Writable {
         return jsonArray;
     }
 }
-
-
-////     REQUIRES: visited destination should have already been in planned
-////     destinations
-////     MODIFIES: this, Destination
-////     EFFECTS: adds the destination to the visited list and removes it from the
-////     planned list, and adds the travel cost to the total trip cost
-//    public void addVisitedDestination(Destination destination) {
-//        destination.setDestinationStatus(DestinationStatus.VISITED);
-//        this.tripExpense += destination.getTravelCost();
-//    }
-
-

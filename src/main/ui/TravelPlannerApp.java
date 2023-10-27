@@ -19,7 +19,6 @@ import java.util.Scanner;  // Import the Scanner class
 public class TravelPlannerApp {
     private static final String JSON_STORE = "./data/trip.json";
     Scanner input;
-     //////////////////////////////////////////////////////
     Trip newTrip;
     private List<Destination> destinations = new ArrayList<>();
     private Destination newDestination;
