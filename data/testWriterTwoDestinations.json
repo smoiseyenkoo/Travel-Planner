@@ -10,7 +10,10 @@
         {
             "country": "Canada",
             "city": "Toronto",
-            "activities": [],
+            "activities": [{
+              "activityCost": 50,
+              "activityName": "sailing"
+            }],
             "travelCost": 300,
             "destinationStatus": "PLANNED"
         }

@@ -104,7 +104,8 @@ class DestinationTest {
     // test destination to String
     @Test
     void testToString() {
-        testDestination.toString();
+        assertEquals("Destination{ID= 3city='Sydney', country='Australia', travelCost=500," +
+                " amount of activities=0, destinationStatus=PLANNED}", testDestination.toString());
     }
 
     // test to set JSON object
