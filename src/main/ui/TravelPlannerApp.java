@@ -50,13 +50,6 @@ public class TravelPlannerApp {
         boolean keepGoing = true;
         System.out.println("Welcome to " + tripName + "!");  // Output user input
 
-        // String command = null;
-//        System.out.println("Enter new trip name!");
-//        tripName = input.nextLine();  // Read user input
-//        System.out.println("Trip Name is: " + tripName);  // Output user input
-
-
-
         while (keepGoing) {
             displayTripMenu();
         }

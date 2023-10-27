@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Code sourced from JsonSerializationDemo
+
+// Unit tests for the JsonWriter class.
 class JsonWriterTest extends JsonTest {
 
     private List<Destination> destinations;
@@ -81,6 +83,11 @@ class JsonWriterTest extends JsonTest {
             assertEquals("New Trip", testTrip.getTripName());
             List<Destination> destinations = testTrip.getDestinations();
             assertEquals(2, destinations.size());
+            checkDestination("Sofia", "Bulgaria", 700, testDestination1.getActivities(),
+                    DestinationStatus.PLANNED, destinations.get(0));
+            checkDestination("Toronto", "Canada", 300, testDestination2.getActivities(),
+                    DestinationStatus.PLANNED, destinations.get(1));
+
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

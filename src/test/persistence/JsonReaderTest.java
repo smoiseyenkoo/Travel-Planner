@@ -14,6 +14,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Code sourced from JsonSerializationDemo
+
+// Unit tests for the JsonReader class.
 class JsonReaderTest extends JsonTest {
 
     private List<Destination> destinations;
@@ -68,8 +70,10 @@ class JsonReaderTest extends JsonTest {
             assertEquals("New Trip", trip.getTripName());
             List<Destination> destinations = trip.getDestinations();
             assertEquals(2, destinations.size());
-            checkDestination("Sofia", DestinationStatus.PLANNED, destinations.get(0));
-            checkDestination("Toronto", DestinationStatus.VISITED, destinations.get(1));
+            checkDestination("Sofia", "Bulgaria", 700, testDestination1.getActivities(),
+                    DestinationStatus.PLANNED, destinations.get(0));
+            checkDestination("Toronto", "Canada", 300, testDestination2.getActivities(),
+                    DestinationStatus.VISITED, destinations.get(1));
             checkActivity("sailing", 50, destinations.get(1).getActivities().get(0));
         } catch (IOException e) {
             fail("Couldn't read from file");
