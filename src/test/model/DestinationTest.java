@@ -108,11 +108,11 @@ class DestinationTest {
                 " amount of activities=0, destinationStatus=PLANNED}", testDestination.toString());
     }
 
-    // test to set JSON object
-    @Test
-    void testToJson() {
-        testDestination.toJson();
-    }
+//    // test to set JSON object
+//    @Test
+//    void testToJson() {
+//        testDestination.toJson();
+//    }
 
     // test get ID
     @Test

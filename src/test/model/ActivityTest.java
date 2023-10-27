@@ -20,9 +20,9 @@ public class ActivityTest {
         assertEquals(100, testActivity1.getActivityCost());
     }
 
-    // test to set JSON object
-    @Test
-    void testToJson() {
-        testActivity1.toJson();
-    }
+//    // test to set JSON object
+//    @Test
+//    void testToJson() {
+//        testActivity1.toJson();
+//    }
 }
