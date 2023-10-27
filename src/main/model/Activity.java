@@ -3,8 +3,9 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+//implements Writable
 // represents an Activity having a name and a cost
-public class Activity implements Writable {
+public class Activity {
     private final String name;
     private final int cost;
 
@@ -26,12 +27,12 @@ public class Activity implements Writable {
         return this.name;
     }
 
-    // EFFECTS: returns an activity as a JSON object
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("cost", cost);
-        return json;
-    }
+//    // EFFECTS: returns an activity as a JSON object
+//    @Override
+//    public JSONObject toJson() {
+//        JSONObject json = new JSONObject();
+//        json.put("name", name);
+//        json.put("cost", cost);
+//        return json;
+//    }
 }
