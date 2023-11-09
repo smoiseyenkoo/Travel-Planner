@@ -23,6 +23,16 @@
             "activities": [],
             "travelCost": 1,
             "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "Antarctica",
+            "city": "South Pole",
+            "activities": [{
+                "activityCost": 10,
+                "activityName": "see penguins"
+            }],
+            "travelCost": 100,
+            "destinationStatus": "PLANNED"
         }
     ],
     "tripName": "Your Trip"
