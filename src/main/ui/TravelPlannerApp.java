@@ -7,16 +7,20 @@ import model.Trip;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
+import java.awt.event.ActionEvent;
 
 // Code sourced from JsonSerializationDemo
 
 // Runs the Travel Planner app
-public class TravelPlannerApp {
+public class TravelPlannerApp extends JFrame {
     private static final String JSON_STORE = "./data/trip.json";
     Scanner input;
     Trip newTrip;
@@ -25,6 +29,22 @@ public class TravelPlannerApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static String tripName;
+    private JLabel label;
+    private JTextField field;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 700;
+    private JTextField cityNameField;
+    private JTextField countryNameField;
+    private JTextField travelCostField;
+    private JComboBox<String> statusComboBox;
+    private JButton addActivityButton;
+    private JButton createDestinationButton;
+
+    private JPanel contentPanel;
+    private static final Color LIGHT_PINK = new Color(252, 215, 237);
+
+
+    private List<Activity> activities;
 
     // EFFECTS: creates instance of the Travel Planner app
     public static void main(String[] args) {
@@ -34,27 +54,59 @@ public class TravelPlannerApp {
 
     // EFFECTS: constructs New trip and runs Travel planner application
     public TravelPlannerApp() {
+        super("Travel Planner!");
         input = new Scanner(System.in);  // Create a Scanner object
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         tripName = "Your Trip";
         newTrip = new Trip(tripName, destinations);
-        run();
+        //run();
+
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+
+        //((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+
+        // Create a single content panel
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new FlowLayout());
+        contentPanel.setBorder(new EmptyBorder(13, 13, 13, 13));
+        // Add the content panel to the frame
+        setContentPane(contentPanel);
+
+        //setLayout(new FlowLayout());
+
+        JButton loadButton = new JButton(new TravelPlannerApp.LoadTripAction());
+        JButton saveAndQuit = new JButton(new TravelPlannerApp.SaveTripAction());
+        JButton quitNoSave = new JButton(new TravelPlannerApp.QuitNoSaveAction());
+        add(loadButton);
+        add(saveAndQuit);
+        add(quitNoSave);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setResizable(false);
+        addMenu();
+        initializeGraphics();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
 
     }
 
-    // MODIFIES: this
-    // EFFECTS: runs app and displays trip main menu
-    public void run() {
-        boolean keepGoing = true;
-        System.out.println("Welcome to " + tripName + "!");  // Output user input
-
-        while (keepGoing) {
-            displayTripMenu();
-        }
-
-        System.out.println("\nGoodbye!");
-    }
+//    // MODIFIES: this
+//    // EFFECTS: runs app and displays trip main menu
+//    public void run() {
+//        boolean keepGoing = true;
+//        System.out.println("Welcome to " + tripName + "!");  // Output user input
+//
+//        while (keepGoing) {
+//            displayTripMenu();
+//        }
+//
+//        System.out.println("\nGoodbye!");
+//    }
 
 
     // EFFECTS: displays main menu of options to user and processes user command
@@ -107,7 +159,7 @@ public class TravelPlannerApp {
                 displayWishlist();
                 break;
             case 4:
-                this.newDestination = makeNewDestination();
+//                this.newDestination = makeNewDestination();
                 newTrip.addDestination(newDestination);
                 break;
             case 5:
@@ -164,41 +216,69 @@ public class TravelPlannerApp {
     // EFFECTS: displays prompts to make a new destination to user and processes user command
     // MODIFIES: this, destinations
     @SuppressWarnings("methodlength") // Signed by Nanjou
-    private Destination makeNewDestination() {
-        input.nextLine();
-        System.out.println("Please Enter City Name: ");
-        String cityName = input.nextLine();  // Read user input
-        System.out.println("Please Enter Country Name: ");
-        String countryName = input.nextLine();  // Read user input
-        System.out.println("Please Enter Travel Cost: $");
-        int travelCost = input.nextInt();  // Read user input
-        input.nextLine();
-        System.out.println("Please Enter Destination Status (planned (1)/visited (2)/wishlist (3)): ");
-        int destinationStatusInput = input.nextInt();
-        DestinationStatus destinationStatus = DestinationStatus.valueOf(destinationStatusInput);  // Read user input
-        input.nextLine();
-        System.out.println("Add activities? (yes/no): ");
-        String inputAddActivity = input.nextLine();  // Read user input
-        List<Activity> activities = new ArrayList<>();
-        if ("yes".equalsIgnoreCase(inputAddActivity)) {
-            do {
-                Activity activity = createActivity();
-                activities.add(activity);
-                input.nextLine();
-                System.out.println("Add activities? (yes/no): ");
-                inputAddActivity = input.nextLine();  // Read user input
-                if (!"yes".equalsIgnoreCase(inputAddActivity)) {
-                    break;
-                }
-            } while (true);
-
-
-        } else {
-            activities = new ArrayList<>();
-        }
-        newDestination = new Destination(cityName, countryName, travelCost, activities, destinationStatus);
-        return newDestination;
-    }
+//    private Destination makeNewDestination() {
+//        // Initialize components
+//        cityNameField = new JTextField(20);
+//        countryNameField = new JTextField(20);
+//        travelCostField = new JTextField(20);
+//
+//        //statusComboBox = new JComboBox<>(new String[]{"Planned", "Visited", "Wishlist"});
+//
+//        //addActivityButton = new JButton("Add Activity");
+//       // createDestinationButton = new JButton("Create Destination");
+//
+//        //activities = new ArrayList<>();
+//
+//        // Add components to the frame
+//        add(new JLabel("City Name: "));
+//        add(cityNameField);
+//        add(new JLabel("Country Name: "));
+//        add(countryNameField);
+//        add(new JLabel("Travel Cost: $"));
+//        add(travelCostField);
+//
+//
+////        add(new JLabel("Destination Status: "));
+////        add(statusComboBox);
+////        add(addActivityButton);
+////        add(createDestinationButton);
+//        pack();
+//
+////
+////        input.nextLine();
+////        System.out.println("Please Enter City Name: ");
+////        String cityName = input.nextLine();  // Read user input
+////        System.out.println("Please Enter Country Name: ");
+////        String countryName = input.nextLine();  // Read user input
+////        System.out.println("Please Enter Travel Cost: $");
+////        int travelCost = input.nextInt();  // Read user input
+////        input.nextLine();
+////        System.out.println("Please Enter Destination Status (planned (1)/visited (2)/wishlist (3)): ");
+////        int destinationStatusInput = input.nextInt();
+////        DestinationStatus destinationStatus = DestinationStatus.valueOf(destinationStatusInput);  // Read user input
+////        input.nextLine();
+////        System.out.println("Add activities? (yes/no): ");
+////        String inputAddActivity = input.nextLine();  // Read user input
+////        List<Activity> activities = new ArrayList<>();
+////        if ("yes".equalsIgnoreCase(inputAddActivity)) {
+////            do {
+////                Activity activity = createActivity();
+////                activities.add(activity);
+////                input.nextLine();
+////                System.out.println("Add activities? (yes/no): ");
+////                inputAddActivity = input.nextLine();  // Read user input
+////                if (!"yes".equalsIgnoreCase(inputAddActivity)) {
+////                    break;
+////                }
+////            } while (true);
+////
+////
+////        } else {
+////            activities = new ArrayList<>();
+////        }
+//        newDestination = new Destination(cityName, countryName, travelCost, activities, destinationStatus);
+//        return newDestination;
+//    }
 
     // EFFECTS: displays prompts to create a new activity to user and processes user command
     // MODIFIES: this
@@ -315,6 +395,222 @@ public class TravelPlannerApp {
         }
     }
 
+
+    // MODIFIES: this
+    // EFFECTS:  draws the JFrame window
+    public void initializeGraphics() {
+        setLayout(new BorderLayout());
+        //setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        //starterMenu();
+        setBackground(Color.pink);
+        getContentPane().setBackground(Color.PINK);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+    }
+
+    private void addMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu optionsMenu = new JMenu("Options");
+        menuBar.add(optionsMenu);
+
+        JMenu destMenu = new JMenu("Destinations");
+        menuBar.add(destMenu);
+
+        // Create destination menu items
+        JMenuItem addNewDestination = new JMenuItem(new TravelPlannerApp.AddNewDestinationAction());
+        JMenuItem viewDestinations = new JMenuItem(new TravelPlannerApp.ViewDestinationAction());
+
+        JMenuItem loadTripItem = new JMenuItem(new TravelPlannerApp.LoadTripAction());
+        JMenuItem quitNoSaveItem = new JMenuItem(new TravelPlannerApp.QuitNoSaveAction());
+        JMenuItem saveTripItem = new JMenuItem(new TravelPlannerApp.SaveTripAction());
+
+
+        destMenu.add(addNewDestination);
+        destMenu.add(viewDestinations);
+
+        optionsMenu.add(loadTripItem);
+        optionsMenu.add(quitNoSaveItem);
+        optionsMenu.add(saveTripItem);
+
+        setJMenuBar(menuBar);
+    }
+
+    private class LoadTripAction extends AbstractAction {
+        LoadTripAction() {
+            super("Load Trip");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JLabel loadLabel = new JLabel("LOADED!");
+            add(loadLabel);
+            loadTrip();
+            pack();
+        }
+    }
+
+    private class SaveTripAction extends AbstractAction {
+        SaveTripAction() {
+            super("Save Trip");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JLabel saveLabel = new JLabel("SAVED!");
+            add(saveLabel);
+            saveTrip();
+            pack();
+        }
+    }
+
+    private class QuitNoSaveAction extends AbstractAction {
+        QuitNoSaveAction() {
+            super("Quit Without Saving");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JLabel quitLabel = new JLabel("GOODBYE!");
+            add(quitLabel);
+            System.exit(0);
+            pack();
+        }
+    }
+
+    private class AddNewDestinationAction extends AbstractAction {
+        AddNewDestinationAction() {
+            super("Add New Destination");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+//            JPanel destinationScreen = createDestinationScreen();
+            //showDestScreen();
+            viewDestScreen();
+            createNewDestinationScreen(); ////////////
+            pack();
+        }
+    }
+
+    private class ViewDestinationAction extends AbstractAction {
+        ViewDestinationAction() {
+            super("View Destinations");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            viewDestScreen();
+            pack();
+        }
+    }
+
+    private class CreateDestinationAction extends AbstractAction {
+        CreateDestinationAction() {
+            super("Create New Destination!");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            createDestination();
+            pack();
+        }
+    }
+
+
+    private void viewDestScreen() {
+        // Remove the current content
+        contentPanel.removeAll();
+
+        // Create a new panel for the new screen
+        JPanel viewDestPanel = new JPanel();
+        viewDestPanel.setBackground(LIGHT_PINK);
+
+        // prints out the list of city names
+        List<String> dests = new ArrayList<>();
+        for (Destination destinations : destinations) {
+            dests.add(destinations.getCity());
+            for (String city : dests) {
+                JLabel cityLabel = new JLabel(city);
+                viewDestPanel.add(cityLabel);
+
+            }
+
+        }
+
+        // Add the new panel to the content panel
+        contentPanel.add(viewDestPanel);
+
+        // Revalidate and repaint to update the display
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+
+    }
+
+
+    private void createNewDestinationScreen() {
+        // Remove the current content
+        contentPanel.removeAll();
+
+        // Create a new panel for the new screen
+        JPanel newDestPanel = new JPanel();
+        newDestPanel.setLayout(new GridLayout(1, 3, 10, 1));
+        newDestPanel.setBackground(LIGHT_PINK);
+
+        // Initialize components
+        cityNameField = new JTextField(10);
+        countryNameField = new JTextField(10);
+        travelCostField = new JTextField(10);
+
+        // Add components to the frame
+        newDestPanel.add(cityNameField);
+        newDestPanel.add(countryNameField);
+        newDestPanel.add(travelCostField);
+
+        // Create labels
+        JLabel cityNameLabel = new JLabel("City Name:");
+        JLabel countryNameLabel = new JLabel("Country Name:");
+        JLabel travelCostLabel = new JLabel("Travel Cost ($):");
+
+        // Add components to the frame
+        newDestPanel.add(cityNameLabel);
+        newDestPanel.add(cityNameField);
+        newDestPanel.add(countryNameLabel);
+        newDestPanel.add(countryNameField);
+        newDestPanel.add(travelCostLabel);
+        newDestPanel.add(travelCostField);
+
+        // Create a button to submit the form
+        JButton submitNewDestinationButton = new JButton(new TravelPlannerApp.CreateDestinationAction());
+        newDestPanel.add(submitNewDestinationButton);
+
+        // Add the new panel to the content panel
+        contentPanel.add(newDestPanel);
+
+        // Revalidate and repaint to update the display
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+    }
+
+    private void createDestination() {
+        String cityName = cityNameField.getText();
+        String countryName = countryNameField.getText();
+        int travelCost = Integer.parseInt(travelCostField.getText());
+        String status = (String) statusComboBox.getSelectedItem();
+        //String[] activities = activitiesArea.getText().split("\n");
+
+        // Use the collected information to create a new Destination object
+        Destination newDestination = new Destination(cityName, countryName, travelCost, activities,
+                DestinationStatus.PLANNED);
+
+        // Perform actions with the new destination, e.g., store it in a list, database, etc.
+        System.out.println("New Destination Created: " + newDestination);
+
+        // Optionally, close the current window after creating the destination
+        dispose();
+    }
 }
 
 
