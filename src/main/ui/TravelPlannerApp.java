@@ -47,6 +47,7 @@ public class TravelPlannerApp extends JFrame {
 
     private JPanel contentPanel;
     private static final Color LIGHT_PINK = new Color(252, 215, 237);
+    private static final Color HOT_PINK = new Color(255, 56, 116);
 
 
     private List<Activity> activities;
@@ -58,6 +59,7 @@ public class TravelPlannerApp extends JFrame {
     }
 
     // EFFECTS: constructs New trip and runs Travel planner application
+    @SuppressWarnings("methodlength")
     public TravelPlannerApp() {
         super("Travel Planner!");
         input = new Scanner(System.in);  // Create a Scanner object
@@ -76,6 +78,8 @@ public class TravelPlannerApp extends JFrame {
         contentPanel.setBorder(new EmptyBorder(13, 13, 13, 13));
         // Add the content panel to the frame
         setContentPane(contentPanel);
+
+
 
         //setLayout(new FlowLayout());
 
@@ -380,8 +384,19 @@ public class TravelPlannerApp extends JFrame {
         setLayout(new BorderLayout());
         //setMinimumSize(new Dimension(WIDTH, HEIGHT));
         //starterMenu();
-        setBackground(Color.pink);
-        getContentPane().setBackground(Color.PINK);
+
+        setBackground(HOT_PINK);
+        getContentPane().setBackground(HOT_PINK);
+
+        //add image to screen
+        ImageIcon cherries = new ImageIcon("data/cherry-pixel-art-png.png");
+
+        Image scaledCherries = cherries.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        ImageIcon scaledCherryIcon = new ImageIcon(scaledCherries);
+
+        JLabel cherryImageLabel = new JLabel(scaledCherryIcon);
+        getContentPane().add(cherryImageLabel);
+
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -466,7 +481,6 @@ public class TravelPlannerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 //            JPanel destinationScreen = createDestinationScreen();
-            //showDestScreen();
             viewDestScreen();
             createNewDestinationScreen(); ////////////
             pack();
@@ -565,6 +579,7 @@ public class TravelPlannerApp extends JFrame {
     }
 
 
+    @SuppressWarnings("methodlength")
     private void createNewDestinationScreen() {
         // Remove the current content
         contentPanel.removeAll();
@@ -579,7 +594,6 @@ public class TravelPlannerApp extends JFrame {
         travelCostField = new JTextField(10);
         // ComboBox for destination status
         statusComboBox = new JComboBox<>(new String[]{"Planned", "Visited", "Wishlist"});
-        activitiesArea = new JTextArea(5, 20);
 
 
         // Create labels
@@ -600,7 +614,6 @@ public class TravelPlannerApp extends JFrame {
         newDestPanel.add(addActivitiesButton);
         newDestPanel.add(statusLabel);
         newDestPanel.add(statusComboBox); // Add the JComboBox
-        newDestPanel.add(new JScrollPane(activitiesArea));
 
 
         // Create a button to submit the form
@@ -674,6 +687,7 @@ public class TravelPlannerApp extends JFrame {
     private void addActivities() {
         String activityName = activityNameField.getText();
         int activityCost = Integer.parseInt(activityCostField.getText());
+        List<Activity> activities = new ArrayList<>();
 
         Activity newActivity = new Activity(activityName, activityCost);
         activities.add(newActivity);
