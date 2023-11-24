@@ -115,6 +115,42 @@ class DestinationTest {
         assertFalse(testDestination.getId() == 2);
     }
 
+    // test destination to String
+    @Test
+    void setCityTest() {
+        testDestination.setCity("istanbul");
+        assertEquals("istanbul", testDestination.getCity());
+    }
+
+    // test destination to String
+    @Test
+    void setCountryTest() {
+        testDestination.setCountry("North Korea");
+        assertEquals("North Korea", testDestination.getCountry());
+    }
+
+    // test destination to String
+    @Test
+    void setCostTest() {
+        testDestination.setTravelCost(100);
+        assertEquals(100, testDestination.getTravelCost());
+    }
+
+    @Test
+    void setStatusTest() {
+        testDestination.setDestinationStatus(DestinationStatus.VISITED);
+        assertEquals(DestinationStatus.VISITED, testDestination.getDestinationStatus());
+    }
+
+    @Test
+    void setActivitiesTest() {
+        activities.add(testActivity2);
+        testDestination.setActivities(activities);
+        assertEquals(activities, testDestination.getActivities());
+    }
+
+
+
 
 
 }
