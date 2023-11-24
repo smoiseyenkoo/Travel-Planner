@@ -52,9 +52,9 @@ public class Destination implements Writable {
         this.activities = activities;
     }
 
-    public static void setNextId(int nextId) {
-        Destination.nextId = nextId;
-    }
+//    public static void setNextId(int nextId) {
+//        Destination.nextId = nextId;
+//    }
 
 
 

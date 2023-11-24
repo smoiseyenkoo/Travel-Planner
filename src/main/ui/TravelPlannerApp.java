@@ -16,10 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
 import java.awt.event.ActionEvent;
-import java.awt.image.ImageObserver;
-import java.net.URL;
 
-// Code sourced from JsonSerializationDemo
+// Code sourced from JsonSerializationDemo,
+// https://medium.com/@michael71314/java-lesson-22-inserting-images-onto-the-jframe-a0a0b6540cca
 
 // Runs the Travel Planner app
 public class TravelPlannerApp extends JFrame {
@@ -43,8 +42,6 @@ public class TravelPlannerApp extends JFrame {
     private JComboBox<DestinationStatus> statusComboBox;
     private JButton addActivityButton;
     private JButton createDestinationButton;
-
-
 
     private JPanel contentPanel;
     private static final Color LIGHT_PINK = new Color(252, 215, 237);
@@ -345,15 +342,12 @@ public class TravelPlannerApp extends JFrame {
 
 
 
-    ///// START PHASE 3 /////////////////////////////////////////////////////
+    ///// START PHASE 3 ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // MODIFIES: this
     // EFFECTS:  draws the JFrame window
     public void initializeGraphics() {
         setLayout(new BorderLayout());
-        //setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        //starterMenu();
-
         setBackground(HOT_PINK);
         getContentPane().setBackground(HOT_PINK);
 
@@ -371,6 +365,7 @@ public class TravelPlannerApp extends JFrame {
 
     }
 
+    //EFFECTS: adds the menu bar with the options and destinations tabs
     private void addMenu() {
         JMenuBar menuBar = new JMenuBar();
         JMenu optionsMenu = new JMenu("Options");
@@ -378,11 +373,9 @@ public class TravelPlannerApp extends JFrame {
 
         JMenu destMenu = new JMenu("Destinations");
         menuBar.add(destMenu);
-
-        // Create destination menu items
         JMenuItem addNewDestination = new JMenuItem(new TravelPlannerApp.AddNewDestinationAction());
-        //JMenuItem viewDestinations = new JMenuItem(new TravelPlannerApp.ViewDestinationAction());
 
+        //create options menu item
         JMenuItem loadTripItem = new JMenuItem(new TravelPlannerApp.LoadTripAction());
         JMenuItem quitNoSaveItem = new JMenuItem(new TravelPlannerApp.QuitNoSaveAction());
         JMenuItem saveTripItem = new JMenuItem(new TravelPlannerApp.SaveTripAction());
@@ -398,6 +391,7 @@ public class TravelPlannerApp extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    // Action class for when the user clicks the Load button, to load the trip from  Json
     private class LoadTripAction extends AbstractAction {
         LoadTripAction() {
             super("Load Trip");
@@ -412,6 +406,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Save and quit button, to save the trip to Json and quit the app
     private class SaveTripAction extends AbstractAction {
         SaveTripAction() {
             super("Save And Quit");
@@ -428,6 +423,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Quit without saving button, to quit the app
     private class QuitNoSaveAction extends AbstractAction {
         QuitNoSaveAction() {
             super("Quit Without Saving");
@@ -442,6 +438,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
     private class AddNewDestinationAction extends AbstractAction {
         AddNewDestinationAction() {
             super("Add New Destination");
@@ -449,13 +446,13 @@ public class TravelPlannerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            JPanel destinationScreen = createDestinationScreen();
             viewDestScreen();
-            createNewDestinationScreen(); ////////////
+            createNewDestinationScreen();
             pack();
         }
     }
 
+    // Action class for when the user clicks the View Destinations button
     private class ViewDestinationAction extends AbstractAction {
         ViewDestinationAction() {
             super("View Destinations");
@@ -468,6 +465,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Create New Destination! menu item
     private class CreateDestinationAction extends AbstractAction {
         CreateDestinationAction() {
             super("Create New Destination!");
@@ -480,6 +478,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Add Activities? button
     private class AddActivitiesAction extends AbstractAction {
         AddActivitiesAction() {
             super("Add Activities?");
@@ -492,6 +491,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Add! activity button
     private class CreateActivityAction extends AbstractAction {
         CreateActivityAction() {
             super("Add!");
@@ -504,6 +504,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // Action class for when the user clicks the Home screen menu item
     private class HomeAction extends AbstractAction {
         HomeAction() {
             super("Home");
@@ -516,9 +517,8 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
+    // EFFECTS: creates the home screen with graphics
     private void homeScreen() {
-        // Remove the current content
-        //contentPanel.removeAll();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
@@ -551,15 +551,15 @@ public class TravelPlannerApp extends JFrame {
     }
 
 
+    // EFFECTS: creates a new screen to print out the list of destinations
     private void viewDestScreen() {
-        // Remove the current content
         contentPanel.removeAll();
 
-        // Create a new panel for the new screen
+        //create new screen
         JPanel viewDestPanel = new JPanel();
         viewDestPanel.setBackground(LIGHT_PINK);
 
-        // prints out the list of city names
+        //prints out the list of city names
         List<String> dests = new ArrayList<>();
         for (Destination destinations : destinations) {
             dests.add(destinations.getCity());
@@ -568,40 +568,34 @@ public class TravelPlannerApp extends JFrame {
                 viewDestPanel.add(cityLabel);
 
             }
-
         }
 
-        // Add the new panel to the content panel
         contentPanel.add(viewDestPanel);
 
-        // Revalidate and repaint to update the display
+        //update display
         contentPanel.revalidate();
         contentPanel.repaint();
-
 
     }
 
 
+    // EFFECTS: creates the new destination screen
     @SuppressWarnings("methodlength")
     private void createNewDestinationScreen() {
-        // Remove the current content
+        //remove the current content
         contentPanel.removeAll();
 
-        // Create a new panel for the new screen
+        //create new screen
         JPanel newDestPanel = new JPanel();
         newDestPanel.setBackground(LIGHT_PINK);
 
-        // Initialize components
+        //initialize components
         cityNameField = new JTextField(10);
         countryNameField = new JTextField(10);
         travelCostField = new JTextField(10);
-        // ComboBox for destination status
-        //statusComboBox = new JComboBox<>(new String[]{"Planned", "Visited", "Wishlist"});
-        // ComboBox for destination status
         statusComboBox = new JComboBox<>(DestinationStatus.values());
 
-
-        // Create labels
+        //create labels
         JLabel cityNameLabel = new JLabel("City Name:");
         JLabel countryNameLabel = new JLabel("Country Name:");
         JLabel travelCostLabel = new JLabel("Travel Cost ($):");
@@ -609,7 +603,7 @@ public class TravelPlannerApp extends JFrame {
 
         JButton addActivitiesButton = new JButton(new TravelPlannerApp.AddActivitiesAction());
 
-        // Add components to the frame
+        //add components
         newDestPanel.add(cityNameLabel);
         newDestPanel.add(cityNameField);
         newDestPanel.add(countryNameLabel);
@@ -618,35 +612,32 @@ public class TravelPlannerApp extends JFrame {
         newDestPanel.add(travelCostField);
         newDestPanel.add(addActivitiesButton);
         newDestPanel.add(statusLabel);
-        newDestPanel.add(statusComboBox); // Add the JComboBox
+        newDestPanel.add(statusComboBox);
 
-
-        // Create a button to submit the form
+        // button to submit new destination to trip
         JButton submitNewDestinationButton = new JButton(new TravelPlannerApp.CreateDestinationAction());
         newDestPanel.add(submitNewDestinationButton);
 
         if (newDestination == null) {
             List<Activity> activities = new ArrayList<>();
-
-            // Use the collected information to create a new Destination object
-
             newDestination = new Destination(activities);
         }
 
         // Add the new panel to the content panel
         contentPanel.add(newDestPanel);
 
-        // Revalidate and repaint to update the display
+        //update display
         contentPanel.revalidate();
         contentPanel.repaint();
 
     }
 
+    // EFFECTS: creates the new activity screen with all the user input materials
     private void createNewActivityScreen() {
         // Remove the current content
         contentPanel.removeAll();
 
-        // Create a new panel for the new screen
+        //new screen
         JPanel createActivityPanel = new JPanel();
         createActivityPanel.setBackground(LIGHT_PINK);
 
@@ -666,16 +657,17 @@ public class TravelPlannerApp extends JFrame {
 
         createActivityPanel.add(submitNewActivityButton);
 
-        // Add the new panel to the content panel
+        //add new panel to the content panel
         contentPanel.add(createActivityPanel);
 
-        // Revalidate and repaint to update the display
+        //update display
         contentPanel.revalidate();
         contentPanel.repaint();
 
-
     }
 
+    // EFFECTS: creates the new destination from the user input fields and adds it to the trip
+    // MODIFIES: this
     private void createDestination() {
         String cityName = cityNameField.getText();
         String countryName = countryNameField.getText();
@@ -687,22 +679,17 @@ public class TravelPlannerApp extends JFrame {
         newDestination.setTravelCost(travelCost);
         newDestination.setDestinationStatus(status);
 
-        // Perform actions with the new destination, e.g., store it in a list, database, etc.
         destinations.add(newDestination);
-
-        // Optionally, close the current window after creating the destination
         homeScreen();
     }
 
+    // EFFECTS: creates the new activity from the user input fields and adds it to the destination
+    // MODIFIES: this
     private void addActivities() {
         String activityName = activityNameField.getText();
         int activityCost = Integer.parseInt(activityCostField.getText());
-
-
         Activity newActivity = new Activity(activityName, activityCost);
         newDestination.addActivity(newActivity);
-
-        // Optionally, close the current window after creating the destination
         createNewDestinationScreen();
 
     }

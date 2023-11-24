@@ -149,8 +149,4 @@ class DestinationTest {
         assertEquals(activities, testDestination.getActivities());
     }
 
-
-
-
-
 }

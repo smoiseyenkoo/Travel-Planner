@@ -16,6 +16,16 @@
             }],
             "travelCost": 1,
             "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "canada",
+            "city": "vancouver",
+            "activities": [{
+                "activityCost": 10,
+                "activityName": "vacnouver"
+            }],
+            "travelCost": 100,
+            "destinationStatus": "PLANNED"
         }
     ],
     "tripName": "Your Trip"
