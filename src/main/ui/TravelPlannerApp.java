@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
 import java.awt.event.ActionEvent;
 
-// Code sourced from JsonSerializationDemo,
+// Code sourced from JsonSerializationDemo, AlarmSystem,
 // https://medium.com/@michael71314/java-lesson-22-inserting-images-onto-the-jframe-a0a0b6540cca
 
 // Runs the Travel Planner app
@@ -42,7 +42,6 @@ public class TravelPlannerApp extends JFrame {
     private JComboBox<DestinationStatus> statusMenu;
     private Destination selectedDest;
     private List<Activity> activities;
-    private JLabel allDestinations;
 
     private JPanel contentPanel;
     private static final Color LIGHT_PINK = new Color(252, 215, 237);
@@ -455,7 +454,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
-    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
+    // Action class for when the user clicks the Change Status Of A Destination menu item, to change the status
     private class ChangeStatusAction extends AbstractAction {
         ChangeStatusAction() {
             super("Change Status Of A Destination");
@@ -468,7 +467,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
-    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
+    // Action class for when the user types in an ID number and presses the select destination button
     private class SelectIDAction extends AbstractAction {
         SelectIDAction() {
             super("Select Destination by ID");
@@ -481,7 +480,8 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
-    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
+    // Action class for when the user clicks the update status button, which updates the status to the selected
+    // MODIFIES: this
     private class SubmitStatusAction extends AbstractAction {
         SubmitStatusAction() {
             super("Update Status");
@@ -561,7 +561,7 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
-    // Action class for when the user clicks the Add! activity button
+    // Action class for when the user clicks the Add! activity button, and adds the activity to activities
     private class CreateActivityAction extends AbstractAction {
         CreateActivityAction() {
             super("Add!");
@@ -587,17 +587,19 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
-    // EFFECTS: creates the home screen with graphics
-    @SuppressWarnings("methodlength")
-    private void homeScreen() {
+    // EFFECTS: sets the default size and exit operations on the screen
+    private void screenDefaults() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    }
 
-        // Create a single content panel
+    // EFFECTS: creates the home screen with graphics
+    private void homeScreen() {
+        screenDefaults();
+        //create main content panel
         contentPanel = new JPanel();
         contentPanel.setLayout(new FlowLayout());
         contentPanel.setBorder(new EmptyBorder(13, 13, 13, 13));
-        // Add the content panel to the frame
         setContentPane(contentPanel);
 
         JButton loadButton = new JButton(new TravelPlannerApp.LoadTripAction());
@@ -622,13 +624,11 @@ public class TravelPlannerApp extends JFrame {
 
         addMenu();
         initializeGraphics();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
 
     // EFFECTS: creates a new screen to print out the list of destinations
-    @SuppressWarnings("methodlength")
     private void viewPlannedDestScreen() {
         contentPanel.removeAll();
 
@@ -636,9 +636,8 @@ public class TravelPlannerApp extends JFrame {
         JPanel viewDestPanel = new JPanel();
         viewDestPanel.setBackground(LIGHT_PINK);
 
-        //prints out the list of city names
+        //prints out the list of city and country names
         List<Destination> plannedDests = new ArrayList<>();
-        List<String> dests = new ArrayList<>();
         for (Destination destinations : newTrip.getDestinations()) {
             if (newTrip.getStatusDestinations(DestinationStatus.PLANNED).size() == 0) {
                 System.out.println("No planned destinations yet!");
@@ -652,25 +651,17 @@ public class TravelPlannerApp extends JFrame {
         }
 
         for (Destination d : plannedDests) {
-            dests.add(d.getCity());
-        }
-
-        for (String city : dests) {
-            JLabel cityLabel = new JLabel(city);
-            viewDestPanel.add(cityLabel);
-
+            JLabel destinationLabel = new JLabel("(" + d.getCity() + ", " + d.getCountry() + ")");
+            viewDestPanel.add(destinationLabel);
         }
 
         contentPanel.add(viewDestPanel);
 
-        //update display
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        updateDisplay();
 
     }
 
     // EFFECTS: creates a new screen to print out the list of destinations
-    @SuppressWarnings("methodlength")
     private void viewVisitedDestScreen() {
         contentPanel.removeAll();
 
@@ -678,39 +669,30 @@ public class TravelPlannerApp extends JFrame {
         JPanel viewDestPanel = new JPanel();
         viewDestPanel.setBackground(LIGHT_PINK);
 
-        //prints out the list of city names
-        List<Destination> plannedDests = new ArrayList<>();
-        List<String> dests = new ArrayList<>();
+        //prints out the list of city and country names
+        List<Destination> visitedDests = new ArrayList<>();
         for (Destination destinations : newTrip.getDestinations()) {
             if (newTrip.getStatusDestinations(DestinationStatus.VISITED).size() == 0) {
                 System.out.println("none");
             } else {
                 if (destinations.getDestinationStatus() == DestinationStatus.VISITED) {
-                    plannedDests.add(destinations);
+                    visitedDests.add(destinations);
                 }
             }
         }
 
-        for (Destination d : plannedDests) {
-            dests.add(d.getCity());
-        }
-
-        for (String city : dests) {
-            JLabel cityLabel = new JLabel(city);
-            viewDestPanel.add(cityLabel);
-
+        for (Destination d : visitedDests) {
+            JLabel destinationLabel = new JLabel("(" + d.getCity() + ", " + d.getCountry() + ")");
+            viewDestPanel.add(destinationLabel);
         }
 
         contentPanel.add(viewDestPanel);
 
-        //update display
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        updateDisplay();
 
     }
 
     // EFFECTS: creates a new screen to print out the list of destinations
-    @SuppressWarnings("methodlength")
     private void viewWishlistDestScreen() {
         contentPanel.removeAll();
 
@@ -718,43 +700,52 @@ public class TravelPlannerApp extends JFrame {
         JPanel viewDestPanel = new JPanel();
         viewDestPanel.setBackground(LIGHT_PINK);
 
-        //prints out the list of city names
-        List<Destination> plannedDests = new ArrayList<>();
-        List<String> dests = new ArrayList<>();
+        //prints out the list of city and country names
+        List<Destination> wishlistDests = new ArrayList<>();
         for (Destination destinations : newTrip.getDestinations()) {
             if (newTrip.getStatusDestinations(DestinationStatus.WISHLIST).size() == 0) {
                 System.out.println("none");
             } else {
                 if (destinations.getDestinationStatus() == DestinationStatus.WISHLIST) {
-                    plannedDests.add(destinations);
+                    wishlistDests.add(destinations);
                 }
             }
         }
 
-        for (Destination d : plannedDests) {
-            dests.add(d.getCity());
-        }
-
-        for (String city : dests) {
-            JLabel cityLabel = new JLabel(city);
-            viewDestPanel.add(cityLabel);
-
+        for (Destination d : wishlistDests) {
+            JLabel destinationLabel = new JLabel("(" + d.getCity() + ", " + d.getCountry() + ")");
+            viewDestPanel.add(destinationLabel);
         }
 
         contentPanel.add(viewDestPanel);
+        updateDisplay();
 
-        //update display
+    }
+
+    // EFFECTS: updates the display to the next screen
+    private void updateDisplay() {
         contentPanel.revalidate();
         contentPanel.repaint();
-
     }
 
 
     // EFFECTS: creates the new destination screen
-    @SuppressWarnings("methodlength")
     private void createNewDestinationScreen() {
         //remove the current content
         contentPanel.removeAll();
+        createNewDestScreenComponents();
+        updateDisplay();
+
+    }
+
+    // EFFECTS: creates the new destination screen components and adds them to the display
+    @SuppressWarnings("methodlength") //Signed by Michelle
+    private void createNewDestScreenComponents() {
+        //create labels
+        JLabel cityNameLabel = new JLabel("City Name:");
+        JLabel countryNameLabel = new JLabel("Country Name:");
+        JLabel travelCostLabel = new JLabel("Travel Cost ($):");
+        JLabel statusLabel = new JLabel("Destination Status:");
 
         //create new screen
         JPanel newDestPanel = new JPanel();
@@ -765,12 +756,6 @@ public class TravelPlannerApp extends JFrame {
         countryNameField = new JTextField(10);
         travelCostField = new JTextField(10);
         statusComboBox = new JComboBox<>(DestinationStatus.values());
-
-        //create labels
-        JLabel cityNameLabel = new JLabel("City Name:");
-        JLabel countryNameLabel = new JLabel("Country Name:");
-        JLabel travelCostLabel = new JLabel("Travel Cost ($):");
-        JLabel statusLabel = new JLabel("Destination Status:");
 
         JButton addActivitiesButton = new JButton(new TravelPlannerApp.AddActivitiesAction());
 
@@ -794,13 +779,7 @@ public class TravelPlannerApp extends JFrame {
             newDestination = new Destination(activities);
         }
 
-        // Add the new panel to the content panel
         contentPanel.add(newDestPanel);
-
-        //update display
-        contentPanel.revalidate();
-        contentPanel.repaint();
-
     }
 
     // EFFECTS: creates the new activity screen with all the user input materials
@@ -830,9 +809,7 @@ public class TravelPlannerApp extends JFrame {
         //add new panel to the content panel
         contentPanel.add(createActivityPanel);
 
-        //update display
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        updateDisplay();
 
     }
 
@@ -862,14 +839,13 @@ public class TravelPlannerApp extends JFrame {
 
     // EFFECTS: creates change status screen with all the user input materials
     private void changeStatusScreen() {
-        // Remove the current content
         contentPanel.removeAll();
 
         //new screen
         JPanel changeStatusPanel = new JPanel();
         changeStatusPanel.setBackground(LIGHT_PINK);
 
-        // Add JLabels for each destination
+        //make the destination into a JLabels with a city and ID
         for (Destination destination : destinations) {
             JLabel destinationLabel = new JLabel(destination.getCity() + ", " + destination.getId());
             changeStatusPanel.add(destinationLabel);
@@ -889,13 +865,11 @@ public class TravelPlannerApp extends JFrame {
         //add new panel to the content panel
         contentPanel.add(changeStatusPanel);
 
-        //update display
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        updateDisplay();
 
     }
 
-    // EFFECTS: creates the update status screen with all the user input materials
+    // EFFECTS: creates the update status screen with all the user input materials to update the destination's status
     private void changeSelectedStatusScreen() {
         // Remove the current content
         contentPanel.removeAll();
@@ -926,14 +900,7 @@ public class TravelPlannerApp extends JFrame {
         //add new panel to the content panel
         contentPanel.add(changeSelectedStatusPanel);
 
-        //update display
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        updateDisplay();
 
     }
-
-
-
-
-
 }
