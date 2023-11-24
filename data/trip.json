@@ -1,37 +1,20 @@
 {
     "destinations": [
         {
-            "country": "canada",
-            "city": "vancouver",
+            "country": "enw",
+            "city": "city",
             "activities": [],
             "travelCost": 1,
-            "destinationStatus": "VISITED"
+            "destinationStatus": "PLANNED"
         },
         {
-            "country": "canada",
-            "city": "toronto",
+            "country": "c",
+            "city": "city",
             "activities": [{
                 "activityCost": 1,
-                "activityName": "sailing"
+                "activityName": "new"
             }],
             "travelCost": 1,
-            "destinationStatus": "PLANNED"
-        },
-        {
-            "country": "germany",
-            "city": "berlin",
-            "activities": [],
-            "travelCost": 1,
-            "destinationStatus": "PLANNED"
-        },
-        {
-            "country": "Antarctica",
-            "city": "South Pole",
-            "activities": [{
-                "activityCost": 10,
-                "activityName": "see penguins"
-            }],
-            "travelCost": 100,
             "destinationStatus": "PLANNED"
         }
     ],

@@ -40,17 +40,16 @@ public class TravelPlannerApp extends JFrame {
     private JTextField travelCostField;
     private JTextField activityNameField;
     private JTextField activityCostField;
-    private JComboBox<String> statusComboBox;
-    private JTextArea activitiesArea;
+    private JComboBox<DestinationStatus> statusComboBox;
     private JButton addActivityButton;
     private JButton createDestinationButton;
+
+
 
     private JPanel contentPanel;
     private static final Color LIGHT_PINK = new Color(252, 215, 237);
     private static final Color HOT_PINK = new Color(255, 56, 116);
 
-
-    private List<Activity> activities;
 
     // EFFECTS: creates instance of the Travel Planner app
     public static void main(String[] args) {
@@ -68,37 +67,7 @@ public class TravelPlannerApp extends JFrame {
         tripName = "Your Trip";
         newTrip = new Trip(tripName, destinations);
         //run();
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-        // Create a single content panel
-        contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout());
-        contentPanel.setBorder(new EmptyBorder(13, 13, 13, 13));
-        // Add the content panel to the frame
-        setContentPane(contentPanel);
-
-
-
-        //setLayout(new FlowLayout());
-
-        JButton loadButton = new JButton(new TravelPlannerApp.LoadTripAction());
-        JButton displayDestButton = new JButton(new TravelPlannerApp.ViewDestinationAction());
-
-        add(loadButton);
-        add(displayDestButton);
-
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setResizable(false);
-
-        addMenu();
-        initializeGraphics();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-
+        homeScreen();
     }
 
     // MODIFIES: this
@@ -417,16 +386,14 @@ public class TravelPlannerApp extends JFrame {
         JMenuItem loadTripItem = new JMenuItem(new TravelPlannerApp.LoadTripAction());
         JMenuItem quitNoSaveItem = new JMenuItem(new TravelPlannerApp.QuitNoSaveAction());
         JMenuItem saveTripItem = new JMenuItem(new TravelPlannerApp.SaveTripAction());
-        JMenuItem homeItem = new JMenuItem(new TravelPlannerApp.SaveTripAction());
-
-
+        JMenuItem homeItem = new JMenuItem(new TravelPlannerApp.HomeAction());
 
         destMenu.add(addNewDestination);
-        //destMenu.add(viewDestinations);
 
         optionsMenu.add(loadTripItem);
         optionsMenu.add(quitNoSaveItem);
         optionsMenu.add(saveTripItem);
+        optionsMenu.add(homeItem);
 
         setJMenuBar(menuBar);
     }
@@ -447,7 +414,7 @@ public class TravelPlannerApp extends JFrame {
 
     private class SaveTripAction extends AbstractAction {
         SaveTripAction() {
-            super("Save Trip");
+            super("Save And Quit");
         }
 
         @Override
@@ -455,6 +422,8 @@ public class TravelPlannerApp extends JFrame {
             JLabel saveLabel = new JLabel("SAVED!");
             add(saveLabel);
             saveTrip();
+            /// goodbye screen
+            System.exit(0);
             pack();
         }
     }
@@ -542,9 +511,43 @@ public class TravelPlannerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Go home");
+            homeScreen();
             pack();
         }
+    }
+
+    private void homeScreen() {
+        // Remove the current content
+        //contentPanel.removeAll();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        // Create a single content panel
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new FlowLayout());
+        contentPanel.setBorder(new EmptyBorder(13, 13, 13, 13));
+        // Add the content panel to the frame
+        setContentPane(contentPanel);
+
+        JButton loadButton = new JButton(new TravelPlannerApp.LoadTripAction());
+        JButton displayDestButton = new JButton(new TravelPlannerApp.ViewDestinationAction());
+
+        add(loadButton);
+        add(displayDestButton);
+
+        JLabel homeDescription = new JLabel("Welcome to your Travel Planner!");
+        homeDescription.setHorizontalAlignment(JLabel.CENTER); // Center the text horizontally
+        add(homeDescription);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setResizable(false);
+
+        addMenu();
+        initializeGraphics();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
 
@@ -593,7 +596,9 @@ public class TravelPlannerApp extends JFrame {
         countryNameField = new JTextField(10);
         travelCostField = new JTextField(10);
         // ComboBox for destination status
-        statusComboBox = new JComboBox<>(new String[]{"Planned", "Visited", "Wishlist"});
+        //statusComboBox = new JComboBox<>(new String[]{"Planned", "Visited", "Wishlist"});
+        // ComboBox for destination status
+        statusComboBox = new JComboBox<>(DestinationStatus.values());
 
 
         // Create labels
@@ -619,6 +624,14 @@ public class TravelPlannerApp extends JFrame {
         // Create a button to submit the form
         JButton submitNewDestinationButton = new JButton(new TravelPlannerApp.CreateDestinationAction());
         newDestPanel.add(submitNewDestinationButton);
+
+        if (newDestination == null) {
+            List<Activity> activities = new ArrayList<>();
+
+            // Use the collected information to create a new Destination object
+
+            newDestination = new Destination(activities);
+        }
 
         // Add the new panel to the content panel
         contentPanel.add(newDestPanel);
@@ -668,35 +681,33 @@ public class TravelPlannerApp extends JFrame {
         String countryName = countryNameField.getText();
         int travelCost = Integer.parseInt(travelCostField.getText());
         DestinationStatus status = (DestinationStatus) statusComboBox.getSelectedItem();
-        List<Activity> activities = new ArrayList<>();   //activitiesArea.getText().split("\n");
 
-
-
-
-        // Use the collected information to create a new Destination object
-        Destination newDestination = new Destination(cityName, countryName, travelCost, activities,
-                status);
+        newDestination.setCity(cityName);
+        newDestination.setCountry(countryName);
+        newDestination.setTravelCost(travelCost);
+        newDestination.setDestinationStatus(status);
 
         // Perform actions with the new destination, e.g., store it in a list, database, etc.
-        System.out.println("New Destination Created: " + newDestination);
+        destinations.add(newDestination);
 
         // Optionally, close the current window after creating the destination
-        dispose();
+        homeScreen();
     }
 
     private void addActivities() {
         String activityName = activityNameField.getText();
         int activityCost = Integer.parseInt(activityCostField.getText());
-        List<Activity> activities = new ArrayList<>();
+
 
         Activity newActivity = new Activity(activityName, activityCost);
-        activities.add(newActivity);
+        newDestination.addActivity(newActivity);
 
         // Optionally, close the current window after creating the destination
         createNewDestinationScreen();
 
-
     }
+
+
 }
 
 

@@ -9,8 +9,8 @@ import java.util.List;
 // represents a destination having a name of a city, it's corresponding country, the travel cost in dollars,
 // a list of activities at that destination, it's visitation status, and an ID number for selection.
 public class Destination implements Writable {
-    private final String city;
-    private final String country;
+    private String city;
+    private String country;
     private int travelCost;
     private List<Activity> activities;
     private DestinationStatus destinationStatus;
@@ -23,13 +23,40 @@ public class Destination implements Writable {
     // a list of activities to do at that destination
     public Destination(String city, String country, int travelCost, List<Activity> activities,
                        DestinationStatus destinationStatus) {
+        this(activities);
         this.city = city;
         this.country = country;
         this.travelCost = travelCost;
-        this.activities = activities == null ? new ArrayList<>() : activities;
         this.destinationStatus = destinationStatus;
-        this.id = ++nextId;
     }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Destination(List<Activity> activities) {
+        this.activities = activities == null ? new ArrayList<>() : activities;
+        this.id = ++nextId;
+
+    }
+
+    public void setTravelCost(int travelCost) {
+        this.travelCost = travelCost;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public static void setNextId(int nextId) {
+        Destination.nextId = nextId;
+    }
+
+
 
     // EFFECTS: Adds activity to the list and adds activity cost to travel cost
     // MODIFIES: this
