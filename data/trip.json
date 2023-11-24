@@ -1,30 +1,41 @@
 {
     "destinations": [
         {
-            "country": "enw",
-            "city": "city",
-            "activities": [],
-            "travelCost": 1,
-            "destinationStatus": "PLANNED"
-        },
-        {
-            "country": "c",
-            "city": "city",
+            "country": "Australia",
+            "city": "Sydney",
             "activities": [{
-                "activityCost": 1,
-                "activityName": "new"
-            }],
-            "travelCost": 1,
-            "destinationStatus": "PLANNED"
-        },
-        {
-            "country": "canada",
-            "city": "vancouver",
-            "activities": [{
-                "activityCost": 10,
-                "activityName": "vacnouver"
+                "activityCost": 20,
+                "activityName": "Snorkeling"
             }],
             "travelCost": 100,
+            "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "Canada",
+            "city": "Whistler",
+            "activities": [
+                {
+                    "activityCost": 30,
+                    "activityName": "Snow Shoeing"
+                },
+                {
+                    "activityCost": 100,
+                    "activityName": "Skiing"
+                }
+            ],
+            "travelCost": 200,
+            "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "USA",
+            "city": "San Diego",
+            "activities": [
+                {
+                    "activityCost": 10,
+                    "activityName": "surfing"
+                }
+            ],
+            "travelCost": 200,
             "destinationStatus": "PLANNED"
         }
     ],

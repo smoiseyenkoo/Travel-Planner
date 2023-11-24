@@ -30,8 +30,6 @@ public class TravelPlannerApp extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static String tripName;
-    private JLabel label;
-    private JTextField field;
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 700;
     private JTextField cityNameField;
@@ -40,8 +38,6 @@ public class TravelPlannerApp extends JFrame {
     private JTextField activityNameField;
     private JTextField activityCostField;
     private JComboBox<DestinationStatus> statusComboBox;
-    private JButton addActivityButton;
-    private JButton createDestinationButton;
 
     private JPanel contentPanel;
     private static final Color LIGHT_PINK = new Color(252, 215, 237);
@@ -55,7 +51,6 @@ public class TravelPlannerApp extends JFrame {
     }
 
     // EFFECTS: constructs New trip and runs Travel planner application
-    @SuppressWarnings("methodlength")
     public TravelPlannerApp() {
         super("Travel Planner!");
         input = new Scanner(System.in);  // Create a Scanner object
@@ -696,5 +691,3 @@ public class TravelPlannerApp extends JFrame {
 
 
 }
-
-
