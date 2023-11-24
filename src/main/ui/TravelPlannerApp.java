@@ -37,7 +37,12 @@ public class TravelPlannerApp extends JFrame {
     private JTextField travelCostField;
     private JTextField activityNameField;
     private JTextField activityCostField;
+    private JTextField idField;
     private JComboBox<DestinationStatus> statusComboBox;
+    private JComboBox<DestinationStatus> statusMenu;
+    private Destination selectedDest;
+    private List<Activity> activities;
+    private JLabel allDestinations;
 
     private JPanel contentPanel;
     private static final Color LIGHT_PINK = new Color(252, 215, 237);
@@ -368,7 +373,9 @@ public class TravelPlannerApp extends JFrame {
 
         JMenu destMenu = new JMenu("Destinations");
         menuBar.add(destMenu);
-        JMenuItem addNewDestination = new JMenuItem(new TravelPlannerApp.AddNewDestinationAction());
+        JMenuItem addNewDestinationItem = new JMenuItem(new TravelPlannerApp.AddNewDestinationAction());
+        JMenuItem changeStatusItem = new JMenuItem(new TravelPlannerApp.ChangeStatusAction());
+
 
         //create options menu item
         JMenuItem loadTripItem = new JMenuItem(new TravelPlannerApp.LoadTripAction());
@@ -376,7 +383,8 @@ public class TravelPlannerApp extends JFrame {
         JMenuItem saveTripItem = new JMenuItem(new TravelPlannerApp.SaveTripAction());
         JMenuItem homeItem = new JMenuItem(new TravelPlannerApp.HomeAction());
 
-        destMenu.add(addNewDestination);
+        destMenu.add(addNewDestinationItem);
+        destMenu.add(changeStatusItem);
 
         optionsMenu.add(loadTripItem);
         optionsMenu.add(quitNoSaveItem);
@@ -441,21 +449,88 @@ public class TravelPlannerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            viewDestScreen();
+            viewPlannedDestScreen();
             createNewDestinationScreen();
             pack();
         }
     }
 
-    // Action class for when the user clicks the View Destinations button
-    private class ViewDestinationAction extends AbstractAction {
-        ViewDestinationAction() {
-            super("View Destinations");
+    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
+    private class ChangeStatusAction extends AbstractAction {
+        ChangeStatusAction() {
+            super("Change Status Of A Destination");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            viewDestScreen();
+            changeStatusScreen();
+            pack();
+        }
+    }
+
+    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
+    private class SelectIDAction extends AbstractAction {
+        SelectIDAction() {
+            super("Select Destination by ID");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            changeSelectedStatusScreen();
+            pack();
+        }
+    }
+
+    // Action class for when the user clicks the Add New Destination menu item, to add a new destination
+    private class SubmitStatusAction extends AbstractAction {
+        SubmitStatusAction() {
+            super("Update Status");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DestinationStatus newStatus = (DestinationStatus) statusMenu.getSelectedItem();
+            selectedDest.setDestinationStatus(newStatus);
+            homeScreen();
+            pack();
+        }
+    }
+
+    // Action class for when the user clicks the View Planned Destinations button
+    private class ViewPlannedDestinationAction extends AbstractAction {
+        ViewPlannedDestinationAction() {
+            super("View Planned Destinations");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            viewPlannedDestScreen();
+            pack();
+        }
+    }
+
+    // Action class for when the user clicks the View Visited Destinations button
+    private class ViewVisitedDestinationAction extends AbstractAction {
+        ViewVisitedDestinationAction() {
+            super("View Visited Destinations");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            viewVisitedDestScreen();
+            pack();
+        }
+    }
+
+    // Action class for when the user clicks the View Wishlist Destinations button
+    private class ViewWishlistDestinationAction extends AbstractAction {
+        ViewWishlistDestinationAction() {
+            super("View Wishlist Destinations");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            viewWishlistDestScreen();
             pack();
         }
     }
@@ -513,6 +588,7 @@ public class TravelPlannerApp extends JFrame {
     }
 
     // EFFECTS: creates the home screen with graphics
+    @SuppressWarnings("methodlength")
     private void homeScreen() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -525,10 +601,15 @@ public class TravelPlannerApp extends JFrame {
         setContentPane(contentPanel);
 
         JButton loadButton = new JButton(new TravelPlannerApp.LoadTripAction());
-        JButton displayDestButton = new JButton(new TravelPlannerApp.ViewDestinationAction());
+        JButton displayPlannedButton = new JButton(new ViewPlannedDestinationAction());
+        JButton displayVisitedButton = new JButton(new ViewVisitedDestinationAction());
+        JButton displayWishlistButton = new JButton(new ViewWishlistDestinationAction());
+
 
         add(loadButton);
-        add(displayDestButton);
+        add(displayPlannedButton);
+        add(displayVisitedButton);
+        add(displayWishlistButton);
 
         JLabel homeDescription = new JLabel("Welcome to your Travel Planner!");
         homeDescription.setHorizontalAlignment(JLabel.CENTER); // Center the text horizontally
@@ -547,7 +628,8 @@ public class TravelPlannerApp extends JFrame {
 
 
     // EFFECTS: creates a new screen to print out the list of destinations
-    private void viewDestScreen() {
+    @SuppressWarnings("methodlength")
+    private void viewPlannedDestScreen() {
         contentPanel.removeAll();
 
         //create new screen
@@ -555,14 +637,108 @@ public class TravelPlannerApp extends JFrame {
         viewDestPanel.setBackground(LIGHT_PINK);
 
         //prints out the list of city names
+        List<Destination> plannedDests = new ArrayList<>();
         List<String> dests = new ArrayList<>();
-        for (Destination destinations : destinations) {
-            dests.add(destinations.getCity());
-            for (String city : dests) {
-                JLabel cityLabel = new JLabel(city);
-                viewDestPanel.add(cityLabel);
+        for (Destination destinations : newTrip.getDestinations()) {
+            if (newTrip.getStatusDestinations(DestinationStatus.PLANNED).size() == 0) {
+                System.out.println("No planned destinations yet!");
 
+
+            } else {
+                if (destinations.getDestinationStatus() == DestinationStatus.PLANNED) {
+                    plannedDests.add(destinations);
+                }
             }
+        }
+
+        for (Destination d : plannedDests) {
+            dests.add(d.getCity());
+        }
+
+        for (String city : dests) {
+            JLabel cityLabel = new JLabel(city);
+            viewDestPanel.add(cityLabel);
+
+        }
+
+        contentPanel.add(viewDestPanel);
+
+        //update display
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+    }
+
+    // EFFECTS: creates a new screen to print out the list of destinations
+    @SuppressWarnings("methodlength")
+    private void viewVisitedDestScreen() {
+        contentPanel.removeAll();
+
+        //create new screen
+        JPanel viewDestPanel = new JPanel();
+        viewDestPanel.setBackground(LIGHT_PINK);
+
+        //prints out the list of city names
+        List<Destination> plannedDests = new ArrayList<>();
+        List<String> dests = new ArrayList<>();
+        for (Destination destinations : newTrip.getDestinations()) {
+            if (newTrip.getStatusDestinations(DestinationStatus.VISITED).size() == 0) {
+                System.out.println("none");
+            } else {
+                if (destinations.getDestinationStatus() == DestinationStatus.VISITED) {
+                    plannedDests.add(destinations);
+                }
+            }
+        }
+
+        for (Destination d : plannedDests) {
+            dests.add(d.getCity());
+        }
+
+        for (String city : dests) {
+            JLabel cityLabel = new JLabel(city);
+            viewDestPanel.add(cityLabel);
+
+        }
+
+        contentPanel.add(viewDestPanel);
+
+        //update display
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+    }
+
+    // EFFECTS: creates a new screen to print out the list of destinations
+    @SuppressWarnings("methodlength")
+    private void viewWishlistDestScreen() {
+        contentPanel.removeAll();
+
+        //create new screen
+        JPanel viewDestPanel = new JPanel();
+        viewDestPanel.setBackground(LIGHT_PINK);
+
+        //prints out the list of city names
+        List<Destination> plannedDests = new ArrayList<>();
+        List<String> dests = new ArrayList<>();
+        for (Destination destinations : newTrip.getDestinations()) {
+            if (newTrip.getStatusDestinations(DestinationStatus.WISHLIST).size() == 0) {
+                System.out.println("none");
+            } else {
+                if (destinations.getDestinationStatus() == DestinationStatus.WISHLIST) {
+                    plannedDests.add(destinations);
+                }
+            }
+        }
+
+        for (Destination d : plannedDests) {
+            dests.add(d.getCity());
+        }
+
+        for (String city : dests) {
+            JLabel cityLabel = new JLabel(city);
+            viewDestPanel.add(cityLabel);
+
         }
 
         contentPanel.add(viewDestPanel);
@@ -629,7 +805,6 @@ public class TravelPlannerApp extends JFrame {
 
     // EFFECTS: creates the new activity screen with all the user input materials
     private void createNewActivityScreen() {
-        // Remove the current content
         contentPanel.removeAll();
 
         //new screen
@@ -669,11 +844,7 @@ public class TravelPlannerApp extends JFrame {
         int travelCost = Integer.parseInt(travelCostField.getText());
         DestinationStatus status = (DestinationStatus) statusComboBox.getSelectedItem();
 
-        newDestination.setCity(cityName);
-        newDestination.setCountry(countryName);
-        newDestination.setTravelCost(travelCost);
-        newDestination.setDestinationStatus(status);
-
+        newDestination = new Destination(cityName, countryName, travelCost, activities, status);
         destinations.add(newDestination);
         homeScreen();
     }
@@ -688,6 +859,81 @@ public class TravelPlannerApp extends JFrame {
         createNewDestinationScreen();
 
     }
+
+    // EFFECTS: creates change status screen with all the user input materials
+    private void changeStatusScreen() {
+        // Remove the current content
+        contentPanel.removeAll();
+
+        //new screen
+        JPanel changeStatusPanel = new JPanel();
+        changeStatusPanel.setBackground(LIGHT_PINK);
+
+        // Add JLabels for each destination
+        for (Destination destination : destinations) {
+            JLabel destinationLabel = new JLabel(destination.getCity() + ", " + destination.getId());
+            changeStatusPanel.add(destinationLabel);
+        }
+
+        idField = new JTextField(10);
+
+        JLabel idLabel = new JLabel("Enter Destination ID: ");
+
+        JButton selectDestButton = new JButton(new SelectIDAction());
+
+        changeStatusPanel.add(idLabel);
+        changeStatusPanel.add(idField);
+
+        changeStatusPanel.add(selectDestButton);
+
+        //add new panel to the content panel
+        contentPanel.add(changeStatusPanel);
+
+        //update display
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+    }
+
+    // EFFECTS: creates the update status screen with all the user input materials
+    private void changeSelectedStatusScreen() {
+        // Remove the current content
+        contentPanel.removeAll();
+        selectedDest = destinations.get(0);
+        statusMenu = new JComboBox<>(DestinationStatus.values());
+        JLabel statusLabel = new JLabel("Destination Status:");
+        JLabel selectedDestLabel = new JLabel(selectedDest.getCity() + ", " + selectedDest.getDestinationStatus());
+        JButton submitStatusButton = new JButton(new SubmitStatusAction());
+
+        //new screen
+        JPanel changeSelectedStatusPanel = new JPanel();
+        changeSelectedStatusPanel.setBackground(LIGHT_PINK);
+
+        int selectedId = Integer.parseInt(idField.getText());
+
+        for (Destination selected : destinations) {
+            if (selected.getId() == selectedId) {
+                selectedDest = selected;
+            }
+        }
+
+
+        changeSelectedStatusPanel.add(selectedDestLabel);
+        changeSelectedStatusPanel.add(statusLabel);
+        changeSelectedStatusPanel.add(statusMenu);
+        changeSelectedStatusPanel.add(submitStatusButton);
+
+        //add new panel to the content panel
+        contentPanel.add(changeSelectedStatusPanel);
+
+        //update display
+        contentPanel.revalidate();
+        contentPanel.repaint();
+
+    }
+
+
+
 
 
 }

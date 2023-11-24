@@ -40,3 +40,19 @@ off my planned list and place it onto my already visited list.
 
 - As a user, I want to be able to save my Trip to the file, if I want to.
 - As a user, I want to be able to be able to load my Trip from file, if I want to.
+
+# Instructions for Grader
+
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by going to the 
+Destinations dropdown menu in the top left corner of the screen, and clicking on Add New destination.
+  - This will take you to a screen where you can fill in the information to add a new destination, and click the
+  Create New Destination! button to create the destination
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by going to the
+- Destinations dropdown menu in the top left corner of the screen, and clicking on Change Status of a Destination
+  - This will take you to a screen where it will print out all the destinations cities and their ID number and you can
+  type in the ID of the destination that you want to select
+  - then it will bring you to a screen where you can use the dropdown to select a new status
+  (planned, visited, wishlist) and then click update status to update the destinations status.
+- You can locate my visual component by looking at the home screen and there is a picture of a pixel cherry
+- You can save the state of my application by going to the Options dropdown menu and clicking Save and Quit
+- You can reload the state of my application by clicking the Load button on the home screen 

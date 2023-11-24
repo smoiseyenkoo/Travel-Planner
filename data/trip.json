@@ -8,7 +8,7 @@
                 "activityName": "Snorkeling"
             }],
             "travelCost": 100,
-            "destinationStatus": "PLANNED"
+            "destinationStatus": "WISHLIST"
         },
         {
             "country": "Canada",
@@ -29,14 +29,36 @@
         {
             "country": "USA",
             "city": "San Diego",
-            "activities": [
-                {
-                    "activityCost": 10,
-                    "activityName": "surfing"
-                }
-            ],
+            "activities": [{
+                "activityCost": 10,
+                "activityName": "surfing"
+            }],
             "travelCost": 200,
             "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "Canada",
+            "city": "Toronto",
+            "activities": [{
+                "activityCost": 5,
+                "activityName": "Birdwatching"
+            }],
+            "travelCost": 100,
+            "destinationStatus": "VISITED"
+        },
+        {
+            "country": "Brazil",
+            "city": "Rio",
+            "activities": [],
+            "travelCost": 100,
+            "destinationStatus": "PLANNED"
+        },
+        {
+            "country": "Australia",
+            "city": "Canberra",
+            "activities": [],
+            "travelCost": 700,
+            "destinationStatus": "VISITED"
         }
     ],
     "tripName": "Your Trip"
