@@ -46,13 +46,15 @@ off my planned list and place it onto my already visited list.
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by going to the 
 Destinations dropdown menu in the top left corner of the screen, and clicking on Add New destination.
   - This will take you to a screen where you can fill in the information to add a new destination, and click the
-  Create New Destination! button to create the destination
-- You can generate the second required action related to the user story "adding multiple Xs to a Y" by going to the
-- Destinations dropdown menu in the top left corner of the screen, and clicking on Change Status of a Destination
-  - This will take you to a screen where it will print out all the destinations cities and their ID number and you can
-  type in the ID of the destination that you want to select
-  - then it will bring you to a screen where you can use the dropdown to select a new status
-  (planned, visited, wishlist) and then click update status to update the destinations status.
+  Create New Destination! button to create the destination. You can add as many destinations to the trip as wanted.
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by going to the 
+Main menu, and clicking on any of the view Visited, Planned, or Wishlist buttons, which will take you to a screen
+where you are able to see each destination in the form of (city, county) that have the status of the selected button.
+- You can also update the status of any destination by clicking on the Destinations dropdown menu and clicking
+Change Status of a Destination, which will take you to a new screen that has the list of all destinations in the form
+(city, ID), and by typing the ID of the destination you want to change, this will select the destination and bring you
+to another screen with the destination in the form (city, status), and you can select the status that you wish to 
+update this selected destination to, and then click the button Update Status to update it.
 - You can locate my visual component by looking at the home screen and there is a picture of a pixel cherry
 - You can save the state of my application by going to the Options dropdown menu and clicking Save and Quit
 - You can reload the state of my application by clicking the Load button on the home screen 
