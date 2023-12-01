@@ -51,14 +51,34 @@
             "city": "Rio",
             "activities": [],
             "travelCost": 100,
-            "destinationStatus": "PLANNED"
+            "destinationStatus": "WISHLIST"
+        },
+        {
+            "country": "Canada",
+            "city": "UBC",
+            "activities": [],
+            "travelCost": 111,
+            "destinationStatus": "VISITED"
         },
         {
             "country": "Australia",
             "city": "Canberra",
-            "activities": [],
-            "travelCost": 700,
+            "activities": [{
+                "activityCost": 4,
+                "activityName": "Tanning"
+            }],
+            "travelCost": 1004,
             "destinationStatus": "VISITED"
+        },
+        {
+            "country": "Fiji",
+            "city": "Suva",
+            "activities": [{
+                "activityCost": 0,
+                "activityName": "Swimming"
+            }],
+            "travelCost": 10,
+            "destinationStatus": "PLANNED"
         }
     ],
     "tripName": "Your Trip"

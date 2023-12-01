@@ -58,3 +58,17 @@ update this selected destination to, and then click the button Update Status to 
 - You can locate my visual component by looking at the home screen and there is a picture of a pixel cherry
 - You can save the state of my application by going to the Options dropdown menu and clicking Save and Quit
 - You can reload the state of my application by clicking the Load button on the home screen 
+
+# Phase 4: Task 2
+- Thu Nov 30 14:35:56 PST 2023
+- Adding new destination: Canberra, Australia
+- Thu Nov 30 14:36:16 PST 2023
+- New activity was added: Tanning
+- Thu Nov 30 14:36:37 PST 2023
+- Setting new status as: VISITED
+- Thu Nov 30 14:36:59 PST 2023
+- Adding new destination: Suva, Fiji
+- Thu Nov 30 14:37:06 PST 2023
+- New activity was added: Swimming
+- Thu Nov 30 14:37:20 PST 2023
+- Setting new status as: WISHLIST

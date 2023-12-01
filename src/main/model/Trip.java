@@ -24,14 +24,17 @@ public class Trip implements Writable {
         this.plannedTripExpense = 0;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, theLog
     // EFFECTS: adds destination to planned destinations and adds
-    // the planned travel costs to the total planned expenses
+    // the planned travel costs to the total planned expenses, and logs the event to EventLog.getInstance()
     public void addDestination(Destination destination) {
         this.destinations.add(destination);
         if (destination.getDestinationStatus() == DestinationStatus.PLANNED) {
             this.plannedTripExpense += destination.getTravelCost();
         }
+        EventLog.getInstance().logEvent(new Event("Adding new destination: " + destination.getCity() + ", "
+                + destination.getCountry()));
+
     }
 
     // REQUIRES: Planned destinations list must be at least one element long
@@ -97,6 +100,7 @@ public class Trip implements Writable {
             }
         }
         return statusDestination;
+
     }
 
 // JSON Code inspired by JsonSerializationDemo

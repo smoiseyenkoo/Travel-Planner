@@ -58,11 +58,13 @@ public class Destination implements Writable {
 
 
 
-    // EFFECTS: Adds activity to the list and adds activity cost to travel cost
-    // MODIFIES: this
+    // EFFECTS: Adds activity to the list and adds activity cost to travel cost, and logs the event to
+    // EventLog.getInstance()
+    // MODIFIES: this, theLog
     public void addActivity(Activity activity) {
         this.activities.add(activity);
         this.travelCost += activity.getActivityCost();
+        EventLog.getInstance().logEvent(new Event("New activity was added: " + activity.getActivityName()));
     }
 
     // EFFECTS: returns name of city
@@ -90,10 +92,12 @@ public class Destination implements Writable {
         return destinationStatus;
     }
 
-    // EFFECTS: sets the destination status to the input
-    // MODIFIES: this
+    // EFFECTS: sets the destination status to the input, and logs the event to EventLog.getInstance()
+    // MODIFIES: this, theLog
     public void setDestinationStatus(DestinationStatus destinationStatus) {
         this.destinationStatus = destinationStatus;
+        EventLog.getInstance().logEvent(new Event("Setting new status as: " + destinationStatus));
+
     }
 
     // EFFECTS: returns ID of the destination

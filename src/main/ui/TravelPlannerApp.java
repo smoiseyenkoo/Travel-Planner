@@ -1,21 +1,20 @@
 package ui;
 
-import model.Activity;
-import model.Destination;
-import model.DestinationStatus;
-import model.Trip;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.Event;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;  // Import the Scanner class
 import java.awt.event.ActionEvent;
+import model.EventLog;
 
 // Code sourced from JsonSerializationDemo, AlarmSystem,
 // https://medium.com/@michael71314/java-lesson-22-inserting-images-onto-the-jframe-a0a0b6540cca
@@ -412,7 +411,8 @@ public class TravelPlannerApp extends JFrame {
         }
     }
 
-    // Action class for when the user clicks the Save and quit button, to save the trip to Json and quit the app
+    // Action class for when the user clicks the Save and quit button, to save the trip to Json and quit the app,
+    // prints event log when quitting
     private class SaveTripAction extends AbstractAction {
         SaveTripAction() {
             super("Save And Quit");
@@ -423,13 +423,14 @@ public class TravelPlannerApp extends JFrame {
             JLabel saveLabel = new JLabel("SAVED!");
             add(saveLabel);
             saveTrip();
-            /// goodbye screen
+            printLog(EventLog.getInstance());
             System.exit(0);
             pack();
         }
     }
 
-    // Action class for when the user clicks the Quit without saving button, to quit the app
+    // Action class for when the user clicks the Quit without saving button, to quit the app, prints event log when
+    // quitting
     private class QuitNoSaveAction extends AbstractAction {
         QuitNoSaveAction() {
             super("Quit Without Saving");
@@ -439,6 +440,7 @@ public class TravelPlannerApp extends JFrame {
         public void actionPerformed(ActionEvent e) {
             JLabel quitLabel = new JLabel("GOODBYE!");
             add(quitLabel);
+            printLog(EventLog.getInstance());
             System.exit(0);
             pack();
         }
@@ -865,7 +867,7 @@ public class TravelPlannerApp extends JFrame {
         DestinationStatus status = (DestinationStatus) statusComboBox.getSelectedItem();
 
         newDestination = new Destination(cityName, countryName, travelCost, activities, status);
-        destinations.add(newDestination);
+        newTrip.addDestination(newDestination);
         homeScreen();
     }
 
@@ -947,4 +949,13 @@ public class TravelPlannerApp extends JFrame {
         updateDisplay();
 
     }
+
+    // EFFECTS: prints out every Event that was logged during the running of the program
+    public void printLog(EventLog el) {
+        for (model.Event next : el) {
+            System.out.println(next);
+        }
+    }
+
+
 }
