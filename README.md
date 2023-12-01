@@ -72,3 +72,8 @@ update this selected destination to, and then click the button Update Status to 
 - New activity was added: Swimming
 - Thu Nov 30 14:37:20 PST 2023
 - Setting new status as: WISHLIST
+
+# Phase 4: Task 3
+In 1-2 paragraphs in this section of your README, describe the refactoring and your reasons for it.
+You do not need to perform the refactoring - just identify the changes you would make if you had more time.
+Keep in mind that refactoring does not mean adding more features to your application.
