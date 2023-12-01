@@ -16,6 +16,7 @@ import java.util.Scanner;  // Import the Scanner class
 import java.awt.event.ActionEvent;
 import model.EventLog;
 
+
 // Code sourced from JsonSerializationDemo, AlarmSystem,
 // https://medium.com/@michael71314/java-lesson-22-inserting-images-onto-the-jframe-a0a0b6540cca
 
