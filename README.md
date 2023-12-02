@@ -85,5 +85,5 @@ compact program that's easier to add more features in one place, rather than mul
 Looking at my UML diagram, I can see class dependencies that i would prefer to minimize if I were to update this 
 project, specifically reducing the dependencies between the Travel Planner app and the Destination class. Ideally,
 I would aim for a design where the Travel Planner app primarily depends on the Trip class, and the Trip class,
-in turn, relies on the Destination class, rather than TravelPlannerApp depending on both Trip **and** destination.
+in turn, relies on the Destination class, rather than TravelPlannerApp depending on both Trip *and* destination.
 This hierarchical structure would enhance code organization, and create a more cohesive program.
