@@ -74,6 +74,16 @@ update this selected destination to, and then click the button Update Status to 
 - Setting new status as: WISHLIST
 
 # Phase 4: Task 3
-In 1-2 paragraphs in this section of your README, describe the refactoring and your reasons for it.
-You do not need to perform the refactoring - just identify the changes you would make if you had more time.
-Keep in mind that refactoring does not mean adding more features to your application.
+If I had more time for this project, I would focus on refactoring the existing code to eliminate duplication,
+specifically in the TravelPlannerApp UI class. I have some duplicated code with my 3 buttons in my GUI where the
+user can click each button to see either their planned, visited, or wishlist destinations. I think to refactor this
+I would want to make that into an abstract class, so I can do the same process of displaying each screen just with
+that one specification of destination status. There is also duplication to set each screen with my selected settings
+(colour, size, etc), so I would like to remove that duplication as well. This way, I would have a much cleaner and
+compact program that's easier to add more features in one place, rather than multiple places.
+
+Looking at my UML diagram, I can see class dependencies that i would prefer to minimize if I were to update this 
+project, specifically reducing the dependencies between the Travel Planner app and the Destination class. Ideally,
+I would aim for a design where the Travel Planner app primarily depends on the Trip class, and the Trip class,
+in turn, relies on the Destination class, rather than TravelPlannerApp depending on both Trip **and** destination.
+This hierarchical structure would enhance code organization, and create a more cohesive program.
